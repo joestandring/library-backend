@@ -11,5 +11,10 @@
     "url": "https://github.coventry.ac.uk/304CEM-2021SEPJAN/standringj-backend.git"
   },
   "author": "Joe Standring",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "koa-bodyparser": "^4.3.0",
+    "koa-router": "^9.4.0",
+    "nodemon": "^2.0.4"
+  }
 }
