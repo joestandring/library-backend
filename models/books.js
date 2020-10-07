@@ -19,3 +19,10 @@ exports.getAll = async function getAll(page, limit, order, direction) {
   const data = await db.runQuery(query, values);
   return data;
 }
+
+exports.getByID = async function getByID(id) {
+  const query = 'SELECT * FROM books WHERE ID = ?;';
+  const values = [id];
+  const data = await db.runQuery(query, values);
+  return data;
+}

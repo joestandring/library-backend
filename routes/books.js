@@ -84,17 +84,12 @@ async function getAll(ctx) {
 }
 
 // Respond with a single book specified by id
-function getByID(ctx) {
+async function getByID(ctx) {
   const { id } = ctx.params;
-  // If the ID is valid, present the book with the corresponding id
-  if (id > 0 && id <= books.length) {
-    ctx.body = books[id - 1];
+  const result = await model.getByID(id);
+  if (result.length) {
     ctx.status = 200;
-  } else {
-    ctx.status = 404;
-    ctx.body = {
-      message: `No book found with id ${id}`,
-    };
+    ctx.body = result[0];
   }
 }
 
@@ -117,11 +112,6 @@ function update(ctx) {
     books[id - 1] = newBook;
     ctx.status = 201;
     ctx.body = newBook;
-  } else {
-    ctx.status = 404;
-    ctx.body = {
-      message: `No book found with id ${id}`,
-    };
   }
 }
 
