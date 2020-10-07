@@ -7,75 +7,20 @@
 const Router = require('koa-router');
 // bodyParser is used to extract the body of a HTTP request
 const bodyParser = require('koa-bodyparser');
-const model = require('../models/books.js')
+const model = require('../models/books.js');
 
 // Use the /books endpoint
 const router = Router({ prefix: '/api/v1/books' });
 
-// TODO: REPLACE WITH DATABASE
-const books = [
-  {
-    id: 1,
-    ownerId: 3,
-    available: 1,
-    dateAdded: '2020-10-06',
-    isbn: '7111196260',
-    title: 'The C Programming Language (2nd Edition)',
-    imgLink: 'https://pictures.abebooks.com/isbn/9787111196266-uk.jpg',
-    authorFirst: 'Brian',
-    authorLast: 'Kernighan',
-    genre: 'Non-fiction',
-    publisher: 'Prentice Hall PTR',
-    publishYear: 2009,
-  },
-  {
-    id: 2,
-    ownerId: 1,
-    available: 1,
-    dateAdded: '2020-10-06',
-    isbn: '0552124753',
-    title: 'Colour of Magic',
-    imgLink: 'https://pictures.abebooks.com/isbn/9780552124751-uk.jpg',
-    authorFirst: 'Pratchett',
-    authorLast: 'Terry',
-    genre: 'Fantasy',
-    publisher: 'Transworld Publishers Limited',
-    publishYear: 1985,
-  },
-  {
-    id: 3,
-    ownerId: 2,
-    available: 1,
-    dateAdded: '2020-10-06',
-    isbn: '0575093137',
-    title: 'Roadside Picnic',
-    imgLink: 'https://pictures.abebooks.com/isbn/9780575093133-uk.jpg',
-    authorFirst: 'Arkady',
-    authorLast: 'Strugatsky',
-    genre: 'Science fiction',
-    publisher: 'Macmillan',
-    publishYear: 1977,
-  },
-  {
-    id: 4,
-    ownerId: 1,
-    available: 1,
-    dateAdded: '2020-10-06',
-    isbn: '0099448475',
-    title: 'Sputnik Sweetheart',
-    imgLink: 'https://pictures.abebooks.com/isbn/9780099448471-uk.jpg',
-    authorFirst: 'Haruki',
-    authorLast: 'Murakami',
-    genre: 'Contemporary fiction',
-    publisher: 'Kodansha',
-    publishYear: 1999,
-  },
-];
-
 // Respond with all books
 async function getAll(ctx) {
   // Set default values, overwritten by values in request
-  const { page = 1, limit = 100, order = 'dateAdded', direction = 'asc' } = ctx.request.query;
+  const {
+    page = 1,
+    limit = 100,
+    order = 'dateAdded',
+    direction = 'asc',
+  } = ctx.request.query;
   const result = await model.getAll(page, limit, order, direction);
   // If the response is not empty
   if (result.length) {
@@ -90,7 +35,7 @@ async function getByID(ctx) {
   // If the response is not empty
   if (result.length) {
     ctx.status = 200;
-    ctx.body = result[0];
+    [ctx.body] = result;
   }
 }
 
@@ -114,14 +59,20 @@ async function update(ctx) {
   if (result.length) {
     const book = result[0];
     // These fields are not updated by the user
-    const { ID, available, dateAdded, ownerID, ...body} = ctx.request.body;
+    const {
+      ID,
+      available,
+      dateAdded,
+      ownerID,
+      ...body
+    } = ctx.request.body;
     // Update allowed fields
     Object.assign(book, body);
     result = await model.update(book);
     // If any rows have been changed
     if (result.affectedRows) {
       ctx.status = 201;
-      ctx.body = { ID: id, updated: true, link: ctx.request.path};
+      ctx.body = { ID: id, updated: true, link: ctx.request.path };
     }
   }
 }
@@ -133,7 +84,7 @@ async function remove(ctx) {
   // If any rows have been deleted
   if (result.affectedRows) {
     ctx.status = 200;
-    ctx.body = { ID: id, deleted: true};
+    ctx.body = { ID: id, deleted: true };
   }
 }
 

@@ -16,10 +16,10 @@ exports.getAll = async function getAll(page, limit, order, direction) {
   } else {
     query = 'SELECT * FROM books ORDER BY ?? ASC LIMIT ? OFFSET ?;';
   }
-  const values = [order, parseInt(limit), parseInt(offset)];
+  const values = [order, parseInt(limit, 10), parseInt(offset, 10)];
   const data = await db.runQuery(query, values);
   return data;
-}
+};
 
 // Respond with a single book specified by id
 exports.getByID = async function getByID(id) {
@@ -27,7 +27,7 @@ exports.getByID = async function getByID(id) {
   const values = [id];
   const data = await db.runQuery(query, values);
   return data;
-}
+};
 
 // Creates a book with values specified in POST request
 exports.create = async function create(book) {
@@ -35,7 +35,7 @@ exports.create = async function create(book) {
   const values = [book];
   const data = await db.runQuery(query, values);
   return data;
-}
+};
 
 // Update a specified book with values in POST request
 exports.update = async function update(book) {
@@ -43,7 +43,7 @@ exports.update = async function update(book) {
   const values = [book, book.ID];
   const data = await db.runQuery(query, values);
   return data;
-}
+};
 
 // Delete book with specified ID
 exports.remove = async function remove(id) {
@@ -51,4 +51,4 @@ exports.remove = async function remove(id) {
   const values = [id];
   const data = await db.runQuery(query, values);
   return data;
-}
+};

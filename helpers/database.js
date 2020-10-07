@@ -12,7 +12,7 @@ exports.runQuery = async function runQuery(query, values) {
     await connection.end();
     return data;
   } catch (error) {
-    //Display a generic error for security
+    // Display a generic error for security
     throw new Error('Database query error');
   }
 };
