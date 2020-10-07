@@ -71,16 +71,17 @@ let books = [
   },
 ];
 
-// Function to run on URI and HTTP method (located in modules/books.js)
+// Functions to run on URI and HTTP method (located in modules/books.js)
 router.get('/', getAll);
 router.get('/:id([0-9]{1,})', getByID);
-//router.post('/', bodyParser(), create);
-//router.put('/:id([0-9]{1,})', update);
+router.post('/', bodyParser(), create);
+router.put('/:id([0-9]{1,})', update);
 //router.del('/:id([0-9]{1,})', remove);
 
 // Respond with all books
 function getAll(ctx) {
   ctx.body = books;
+  ctx.status = 200;
 }
 
 // Respond with a single book specified by id
@@ -96,6 +97,15 @@ function getByID(ctx) {
       message: `No book found with id ${id}`
     };
   }
+}
+
+// Creates a book with values specified in POST request
+function create(ctx) {
+  const {title, authorLast, publisher} = ctx.request.body;
+  const newBook = {title: title, authoLast: authorLast, publisher: publisher};
+  books.push(newBook);
+  ctx.body = newBook;
+  ctx.status = 201;
 }
 
 // Export for use in index.js
