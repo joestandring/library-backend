@@ -26,3 +26,10 @@ exports.getByID = async function getByID(id) {
   const data = await db.runQuery(query, values);
   return data;
 }
+
+exports.create = async function create(book) {
+  const query = 'INSERT INTO books SET ?';
+  const values = [book];
+  const data = await db.runQuery(query, values);
+  return data;
+}

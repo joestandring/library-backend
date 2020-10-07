@@ -77,6 +77,7 @@ async function getAll(ctx) {
   // Set default values, overwritten by values in request
   const { page = 1, limit = 100, order = 'dateAdded', direction = 'asc' } = ctx.request.query;
   const result = await model.getAll(page, limit, order, direction);
+  // If the response is not empty
   if (result.length) {
     ctx.status = 200;
     ctx.body = result;
@@ -85,8 +86,8 @@ async function getAll(ctx) {
 
 // Respond with a single book specified by id
 async function getByID(ctx) {
-  const { id } = ctx.params;
-  const result = await model.getByID(id);
+  const result = await model.getByID(ctx.params.id);
+  // If the response is not empty
   if (result.length) {
     ctx.status = 200;
     ctx.body = result[0];
@@ -94,12 +95,14 @@ async function getByID(ctx) {
 }
 
 // Creates a book with values specified in POST request
-function create(ctx) {
-  const { title, authorLast, publisher } = ctx.request.body;
-  const newBook = { title, authorLast, publisher };
-  books.push(newBook);
-  ctx.body = newBook;
-  ctx.status = 201;
+async function create(ctx) {
+  const result = await model.create(ctx.request.body);
+  // If any rows have been changed
+  if (result.affectedRows) {
+    const id = result.insertId;
+    ctx.status = 201;
+    ctx.body = {ID: id, created: true, link: `${ctx.request.path}/${id}`};
+  }
 }
 
 // Update a specified book with values in POST request
