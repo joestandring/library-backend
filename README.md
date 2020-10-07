@@ -1,2 +1,99 @@
-# standringj-backend
-An API backend for a book lending service
+# Book Lending API Backend
+An API backend for a book lending service using Node.js, Koa, and MySQL
+
+This document contains information for installing, setting up, and configuring the backend API. For information regarding requests supported by this API see the online documentation at [INSERT LINK].
+
+# Installing
+- Clone the repository:
+```
+$ git clone https://github.coventry.ac.uk/304CEM-2021SEPJAN/standringj-backend.git
+```
+- Install the package:
+```
+$ cd standringj-backend
+$ npm install
+```
+# Database configuration
+- This API uses ```promises-mysql``` package to interface with a MySQL database on the server.
+## Creating tables
+- To start using this API, you will need to create a new MySQL database containing 3 tables with the following columns:
+### books
+```
++-------------+---------------+------+-----+-------------------+----------------+
+| Field       | Type          | Null | Key | Default           | Extra          |
++-------------+---------------+------+-----+-------------------+----------------+
+| ID          | int(11)       | NO   | PRI | NULL              | auto_increment |
+| ownerID     | int(11)       | NO   | MUL | NULL              |                |
+| available   | tinyint(1)    | NO   |     | 1                 |                |
+| isbn        | varchar(10)   | NO   |     | NULL              |                |
+| title       | varchar(32)   | NO   |     | NULL              |                |
+| imgLink     | varchar(2048) | YES  |     | NULL              |                |
+| authorFirst | varchar(16)   | YES  |     | NULL              |                |
+| authorLast  | varchar(16)   | YES  |     | NULL              |                |
+| genre       | varchar(16)   | YES  |     | NULL              |                |
+| publisher   | varchar(32)   | YES  |     | NULL              |                |
+| publishYear | int(4)        | YES  |     | NULL              |                |
+| dateAdded   | datetime      | NO   |     | CURRENT_TIMESTAMP |                |
++-------------+---------------+------+-----+-------------------+----------------+
+```
+### users
+```
++--------------+-------------+------+-----+---------+----------------+
+| Field        | Type        | Null | Key | Default | Extra          |
++--------------+-------------+------+-----+---------+----------------+
+| ID           | int(11)     | NO   | PRI | NULL    | auto_increment |
+| username     | varchar(32) | NO   | UNI | NULL    |                |
+| email        | varchar(64) | NO   | UNI | NULL    |                |
+| password     | varchar(64) | NO   |     | NULL    |                |
+| passwordSalt | varchar(16) | YES  |     | NULL    |                |
+| firstName    | varchar(32) | YES  |     | NULL    |                |
+| lastName     | varchar(32) | YES  |     | NULL    |                |
+| address1     | varchar(64) | NO   |     | NULL    |                |
+| address2     | varchar(64) | YES  |     | NULL    |                |
+| address3     | varchar(64) | YES  |     | NULL    |                |
+| city         | varchar(16) | NO   |     | NULL    |                |
+| postcode     | varchar(8)  | NO   |     | NULL    |                |
++--------------+-------------+------+-----+---------+----------------+
+```
+### requests
+```
++---------+--------------+------+-----+---------+----------------+
+| Field   | Type         | Null | Key | Default | Extra          |
++---------+--------------+------+-----+---------+----------------+
+| ID      | int(11)      | NO   | PRI | NULL    | auto_increment |
+| bookID  | int(11)      | NO   | MUL | NULL    |                |
+| userID  | int(11)      | NO   | MUL | NULL    |                |
+| message | varchar(256) | YES  |     | NULL    |                |
++---------+--------------+------+-----+---------+----------------+
+```
+## Configuration
+- For the API to use the database, it must be configured using a ```.config.js``` file.
+- To create a new ```config.js``` file, you can copy the existing template:
+```
+$ cp .config.template.js .config.js
+```
+and edit it to contain your MySQL database information:
+```
+exports.config = {
+  host: process.env.DB_HOST || '<YOUR_HOSTNAME>',
+  port: process.env.DB_PORT || 3306,
+  user: process.env.DB_USER || '<MYSQL_USERNAME>',
+  password: process.env.DB_PASSWORD || '<MYSQL_USER_PASSWORD>',
+  database: process.env.DB_DATABASE || '<MYSQL_DATABASE_NAME>',
+  connection_limit: 100,
+}
+```
+
+# Running the database
+- To run the database, you can use the ```start``` script to run ```index.js``` with ```nodemon```. This means that the server will update when any files are changed:
+```
+$ npm start
+```
+
+# Linting
+- Files in this project use the [Airbnb JavaScript Style](https://github.com/airbnb/javascript) to keep code consistent. This is enforced using the ```eslint``` rules in ```.eslint.rc```. 
+- Whenever you make any changes to files in this project, you should run the linter using:
+```
+$ npm run linter
+```
+and fix all errors/warnings before commiting.
