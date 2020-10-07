@@ -101,20 +101,28 @@ async function create(ctx) {
   if (result.affectedRows) {
     const id = result.insertId;
     ctx.status = 201;
-    ctx.body = {ID: id, created: true, link: `${ctx.request.path}/${id}`};
+    ctx.body = { ID: id, created: true, link: `${ctx.request.path}/${id}` };
   }
 }
 
 // Update a specified book with values in POST request
-function update(ctx) {
+async function update(ctx) {
   const { id } = ctx.params;
-  const { title, authorLast, publisher } = ctx.request.body;
-  // If the ID is valid, update fields to the new values
-  if (id > 0 && id <= books.length) {
-    const newBook = { title, authorLast, publisher };
-    books[id - 1] = newBook;
-    ctx.status = 201;
-    ctx.body = newBook;
+  // Check if the book exists
+  let result = await model.getByID(id);
+  // If the response is not empty
+  if (result.length) {
+    const book = result[0];
+    // These fields are not updated by the user
+    const { ID, available, dateAdded, ownerID, ...body} = ctx.request.body;
+    // Update allowed fields
+    Object.assign(book, body);
+    result = await model.update(book);
+    // If any rows have been changed
+    if (result.affectedRows) {
+      ctx.status = 201;
+      ctx.body = { ID: id, updated: true, link: ctx.request.path};
+    }
   }
 }
 
