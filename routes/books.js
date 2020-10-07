@@ -7,6 +7,7 @@
 const Router = require('koa-router');
 // bodyParser is used to extract the body of a HTTP request
 const bodyParser = require('koa-bodyparser');
+const model = require('../models/books.js')
 
 // Use the /books endpoint
 const router = Router({ prefix: '/api/v1/books' });
@@ -72,9 +73,14 @@ const books = [
 ];
 
 // Respond with all books
-function getAll(ctx) {
-  ctx.body = books;
-  ctx.status = 200;
+async function getAll(ctx) {
+  // Set default values, overwritten by values in request
+  const { page = 1, limit = 100, order = 'dateAdded', direction = 'asc' } = ctx.request.query;
+  const result = await model.getAll(page, limit, order, direction);
+  if (result.length) {
+    ctx.status = 200;
+    ctx.body = result;
+  }
 }
 
 // Respond with a single book specified by id
