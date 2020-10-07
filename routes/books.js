@@ -75,7 +75,7 @@ let books = [
 router.get('/', getAll);
 router.get('/:id([0-9]{1,})', getByID);
 router.post('/', bodyParser(), create);
-router.put('/:id([0-9]{1,})', update);
+router.put('/:id([0-9]{1,})',bodyParser(), update);
 //router.del('/:id([0-9]{1,})', remove);
 
 // Respond with all books
@@ -106,6 +106,24 @@ function create(ctx) {
   books.push(newBook);
   ctx.body = newBook;
   ctx.status = 201;
+}
+
+// Update a specified book with values in POST request
+function update(ctx) {
+  const id = ctx.params.id;
+  const {title, authorLast, publisher} = ctx.request.body;
+  // If the ID is valid, update fields to the new values
+  if(id > 0 && id <= books.length) {
+    const newBook = {title: title, authorLast: authorLast, publisher: publisher};
+    books[id - 1] = newBook;
+    ctx.status = 201;
+    ctx.body = newBook;
+  } else {
+    ctx.status = 404;
+    ctx.body = {
+      message: `No book found with id ${id}`
+    }
+  }
 }
 
 // Export for use in index.js
