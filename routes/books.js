@@ -73,7 +73,7 @@ let books = [
 
 // Function to run on URI and HTTP method (located in modules/books.js)
 router.get('/', getAll);
-//router.get('/:id([0-9]{1,})', getByID);
+router.get('/:id([0-9]{1,})', getByID);
 //router.post('/', bodyParser(), create);
 //router.put('/:id([0-9]{1,})', update);
 //router.del('/:id([0-9]{1,})', remove);
@@ -81,7 +81,21 @@ router.get('/', getAll);
 // Respond with all books
 function getAll(ctx) {
   ctx.body = books;
-  console.log('All books returned');
+}
+
+// Respond with a single book specified by id
+function getByID(ctx) {
+  const id = ctx.params.id;
+  // If the ID is valid, present the book with the corresponding id
+  if(id > 0 && id <= books.length) {
+    ctx.body = books[id - 1];
+    ctx.status = 200;
+  } else {
+    ctx.status = 404;
+    ctx.body = {
+      message: `No book found with id ${id}`
+    };
+  }
 }
 
 // Export for use in index.js
