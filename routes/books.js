@@ -127,20 +127,13 @@ async function update(ctx) {
 }
 
 // Delete book with specified ID
-function remove(ctx) {
+async function remove(ctx) {
   const { id } = ctx.params;
-  // If the ID is valid, delete the corresponding book
-  if (id > 0 && id <= books.length) {
-    books.splice(id - 1, 1);
+  const result = await model.remove(id);
+  // If any rows have been deleted
+  if (result.affectedRows) {
     ctx.status = 200;
-    ctx.body = {
-      message: `Book ${id} deleted`,
-    };
-  } else {
-    ctx.status = 404;
-    ctx.body = {
-      message: `No book found with id ${id}`,
-    };
+    ctx.body = { ID: id, deleted: true};
   }
 }
 

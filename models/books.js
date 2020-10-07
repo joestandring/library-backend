@@ -44,3 +44,11 @@ exports.update = async function update(book) {
   const data = await db.runQuery(query, values);
   return data;
 }
+
+// Delete book with specified ID
+exports.remove = async function remove(id) {
+  const query = 'DELETE FROM books WHERE ID = ?;';
+  const values = [id];
+  const data = await db.runQuery(query, values);
+  return data;
+}
