@@ -76,7 +76,7 @@ router.get('/', getAll);
 router.get('/:id([0-9]{1,})', getByID);
 router.post('/', bodyParser(), create);
 router.put('/:id([0-9]{1,})',bodyParser(), update);
-//router.del('/:id([0-9]{1,})', remove);
+router.del('/:id([0-9]{1,})', remove);
 
 // Respond with all books
 function getAll(ctx) {
@@ -123,6 +123,24 @@ function update(ctx) {
     ctx.body = {
       message: `No book found with id ${id}`
     }
+  }
+}
+
+// Delete book with specified ID 
+function remove(ctx) {
+  const id = ctx.params.id;
+  // If the ID is valid, delete the corresponding book
+  if(id > 0 && id <= books.length) {
+    books.splice(id - 1, 1);
+    ctx.status = 200;
+    ctx.body = {
+      message: `Book ${id} deleted`
+    };
+  } else {
+    ctx.status = 404;
+    ctx.body = {
+      message: `No book found with id ${id}`
+    };
   }
 }
 
