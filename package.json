@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js",
+    "linter": "node_modules/.bin/eslint .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
