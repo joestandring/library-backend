@@ -30,7 +30,7 @@ exports.getByID = async function getByID(id) {
 };
 
 // Respond with a single request specified by the user's id
-exports.getByID = async function getByID(id) {
+exports.getByUserID = async function getByUserID(id) {
   const query = 'SELECT * FROM requests WHERE userID = ?;';
   const values = [id];
   const data = await db.runQuery(query, values);
@@ -38,7 +38,7 @@ exports.getByID = async function getByID(id) {
 };
 
 // Respond with a single request specified by the book's id
-exports.getByID = async function getByID(id) {
+exports.getByBookID = async function getByBookID(id) {
   const query = 'SELECT * FROM requests WHERE bookID = ?;';
   const values = [id];
   const data = await db.runQuery(query, values);

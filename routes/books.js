@@ -39,13 +39,13 @@ async function getByID(ctx) {
   }
 }
 
-// Respond with a single book specified by it's owner's ID
-async function getByID(ctx) {
-  const result = await model.getByID(ctx.params.id);
+// Respond with books specified by it's owner's ID
+async function getByUserID(ctx) {
+  const result = await model.getByUserID(ctx.params.id);
   // If the response is not empty
   if (result.length) {
     ctx.status = 200;
-    [ctx.body] = result;
+    ctx.body = result;
   }
 }
 

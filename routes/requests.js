@@ -40,22 +40,22 @@ async function getByID(ctx) {
 }
 
 // Respond with a single requests specified by the user's id
-async function getByID(ctx) {
-  const result = await model.getByID(ctx.params.id);
+async function getByUserID(ctx) {
+  const result = await model.getByUserID(ctx.params.id);
   // If the response is not empty
   if (result.length) {
     ctx.status = 200;
-    [ctx.body] = result;
+    ctx.body = result;
   }
 }
 
 // Respond with a single requests specified by the book's id
-async function getByID(ctx) {
-  const result = await model.getByID(ctx.params.id);
+async function getByBookID(ctx) {
+  const result = await model.getByBookID(ctx.params.id);
   // If the response is not empty
   if (result.length) {
     ctx.status = 200;
-    [ctx.body] = result;
+    ctx.body = result;
   }
 }
 

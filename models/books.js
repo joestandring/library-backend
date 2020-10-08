@@ -30,7 +30,7 @@ exports.getByID = async function getByID(id) {
 };
 
 // Respond with a single book specified by it's owner's id
-exports.getByID = async function getByUserID(id) {
+exports.getByUserID = async function getByUserID(id) {
   const query = 'SELECT * FROM books WHERE ownerID = ?;';
   const values = [id];
   const data = await db.runQuery(query, values);
