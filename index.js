@@ -7,6 +7,8 @@ const router = new Router();
 
 // Import route files
 const books = require('./routes/books.js');
+const users = require('./routes/users.js');
+const requests = require('./routes/requests.js')
 
 // Runs on GET request to /api/v1. Greets user
 function welcome(ctx) {
@@ -21,6 +23,8 @@ router.get('/api/v1', welcome);
 // Use defined routes
 app.use(router.routes());
 app.use(books.routes());
+app.use(users.routes());
+app.use(requests.routes());
 
 // Run on specified port
 app.listen(3000);

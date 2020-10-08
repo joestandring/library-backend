@@ -1,24 +1,24 @@
 /*
- *  routes/books.js
- *  Responds to requests at /api/v1/books with functions in models/books.js
+ *  routes/requests.js
+ *  Responds to requests at /api/v1/requests with functions in models/requests.js
 */
 
 // Create an instance of the router object, imported by index.js
 const Router = require('koa-router');
 // bodyParser is used to extract the body of a HTTP request
 const bodyParser = require('koa-bodyparser');
-const model = require('../models/books.js');
+const model = require('../models/requests.js');
 
-// Use the /books endpoint
-const router = Router({ prefix: '/api/v1/books' });
+// Use the /requests endpoint
+const router = Router({ prefix: '/api/v1/requests' });
 
-// Respond with all books
+// Respond with all requests
 async function getAll(ctx) {
   // Set default values, overwritten by values in request
   const {
     page = 1,
     limit = 100,
-    order = 'dateAdded',
+    order = 'ID',
     direction = 'asc',
   } = ctx.request.query;
   const result = await model.getAll(page, limit, order, direction);
@@ -29,7 +29,7 @@ async function getAll(ctx) {
   }
 }
 
-// Respond with a single book specified by id
+// Respond with a single requests specified by id
 async function getByID(ctx) {
   const result = await model.getByID(ctx.params.id);
   // If the response is not empty
@@ -39,7 +39,7 @@ async function getByID(ctx) {
   }
 }
 
-// Respond with a single book specified by it's owner's ID
+// Respond with a single requests specified by the user's id
 async function getByID(ctx) {
   const result = await model.getByID(ctx.params.id);
   // If the response is not empty
@@ -49,7 +49,17 @@ async function getByID(ctx) {
   }
 }
 
-// Creates a book with values specified in POST request
+// Respond with a single requests specified by the book's id
+async function getByID(ctx) {
+  const result = await model.getByID(ctx.params.id);
+  // If the response is not empty
+  if (result.length) {
+    ctx.status = 200;
+    [ctx.body] = result;
+  }
+}
+
+// Creates a requests with values specified in POST request
 async function create(ctx) {
   const result = await model.create(ctx.request.body);
   // If any rows have been changed
@@ -60,25 +70,23 @@ async function create(ctx) {
   }
 }
 
-// Update a specified book with values in POST request
+// Update a specified requests with values in POST request
 async function update(ctx) {
   const { id } = ctx.params;
   // Check if the book exists
   let result = await model.getByID(id);
   // If the response is not empty
   if (result.length) {
-    const book = result[0];
-    // These fields are not updated by the user
+    const request = result[0];
+    // These fields are not updated by the request
     const {
       ID,
-      available,
-      dateAdded,
-      ownerID,
+      passwordSalt,
       ...body
     } = ctx.request.body;
     // Update allowed fields
-    Object.assign(book, body);
-    result = await model.update(book);
+    Object.assign(request, body);
+    result = await model.update(request);
     // If any rows have been changed
     if (result.affectedRows) {
       ctx.status = 201;
@@ -87,7 +95,7 @@ async function update(ctx) {
   }
 }
 
-// Delete book with specified ID
+// Delete request with specified ID
 async function remove(ctx) {
   const { id } = ctx.params;
   const result = await model.remove(id);
@@ -98,10 +106,11 @@ async function remove(ctx) {
   }
 }
 
-// Functions to run on URI and HTTP method (located in modules/books.js)
+// Functions to run on URI and HTTP method (located in modules/request.js)
 router.get('/', getAll);
 router.get('/:id([0-9]{1,})', getByID);
 router.get('/user/:id([0-9]{1,})', getByUserID);
+router.get('/book/:id([0-9]{1,})', getByBookID);
 router.post('/', bodyParser(), create);
 router.put('/:id([0-9]{1,})', bodyParser(), update);
 router.del('/:id([0-9]{1,})', remove);

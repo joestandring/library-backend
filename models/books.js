@@ -29,6 +29,14 @@ exports.getByID = async function getByID(id) {
   return data;
 };
 
+// Respond with a single book specified by it's owner's id
+exports.getByID = async function getByUserID(id) {
+  const query = 'SELECT * FROM books WHERE ownerID = ?;';
+  const values = [id];
+  const data = await db.runQuery(query, values);
+  return data;
+};
+
 // Creates a book with values specified in POST request
 exports.create = async function create(book) {
   const query = 'INSERT INTO books SET ?';
