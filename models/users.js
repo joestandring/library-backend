@@ -41,7 +41,7 @@ exports.getByUsername = async function getByUsername(username) {
 // Creates a user with values specified in POST request
 exports.create = async function create(user) {
   const query = 'INSERT INTO users SET ?';
-  let { password } = user;
+  const { password } = user;
   // Encrypt the password 10 times
   const hash = bcrypt.hashSync(password, 10);
   user.password = hash;

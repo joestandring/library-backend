@@ -10,6 +10,8 @@ const bodyParser = require('koa-bodyparser');
 const model = require('../models/users.js');
 // Authenticate routes using auth middleware
 const auth = require('../controllers/auth');
+// Validate routes using validation middleware
+const { validateUser } = require('../controllers/validation');
 
 // Use the /users endpoint
 const router = Router({ prefix: '/api/v1/users' });
@@ -93,9 +95,10 @@ async function remove(ctx) {
 // Functions to run on URI and HTTP method (located in modules/users.js)
 router.get('/', getAll);
 router.get('/:id([0-9]{1,})', getByID);
-router.post('/', bodyParser(), create);
+// 'validateUser' is used to validate body content BEFORE the model function is run
+router.post('/', bodyParser(), validateUser, create);
 // 'auth' is used to verify user information BEFORE the model function is run
-router.put('/:id([0-9]{1,})', auth, bodyParser(), update);
+router.put('/:id([0-9]{1,})', auth, bodyParser(), validateUser, update);
 router.del('/:id([0-9]{1,})', auth, remove);
 
 // Export for use in index.js
