@@ -10,7 +10,6 @@ const bodyParser = require('koa-bodyparser');
 const model = require('../models/books.js');
 // Authenticate routes using auth middleware
 const auth = require('../controllers/auth');
-
 // Use the /books endpoint
 const router = Router({ prefix: '/api/v1/books' });
 
@@ -53,7 +52,7 @@ async function getByUserID(ctx) {
 
 // Creates a book with values specified in POST request
 async function create(ctx) {
-  const result = await model.create(ctx.request.body);
+  const result = await model.create(ctx.request.body, ctx.state.user.ID);
   // If any rows have been changed
   if (result.affectedRows) {
     const id = result.insertId;
