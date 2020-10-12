@@ -97,11 +97,17 @@ async function update(ctx) {
 // Delete book with specified ID
 async function remove(ctx) {
   const { id } = ctx.params;
-  const result = await model.remove(id);
-  // If any rows have been deleted
-  if (result.affectedRows) {
-    ctx.status = 200;
-    ctx.body = { ID: id, deleted: true };
+  // Check if the book is owned by the authenticated user
+  if (id === ctx.state.user.ID) {
+    const result = await model.remove(id);
+    // If any rows have been deleted
+    if (result.affectedRows) {
+      ctx.status = 200;
+      ctx.body = { ID: id, deleted: true };
+    }
+  } else {
+    ctx.status = 403;
+    ctx.body = 'You are not permitted to delete this entry';
   }
 }
 
