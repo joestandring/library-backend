@@ -17,8 +17,10 @@
   "dependencies": {
     "koa": "^2.13.0",
     "koa-bodyparser": "^4.3.0",
+    "koa-passport": "^4.1.3",
     "koa-router": "^9.4.0",
     "nodemon": "^2.0.4",
+    "passport-http": "^0.3.0",
     "promise-mysql": "^4.1.3"
   },
   "devDependencies": {
