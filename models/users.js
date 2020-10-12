@@ -3,7 +3,8 @@
  *  CRUD operations for books using requests from routes/users.js
 */
 
-// This file converts requests to valid MySQL syntax
+const bcrypt = require('bcrypt');
+// db converts requests to valid MySQL syntax
 const db = require('../helpers/database.js');
 
 // Functions imported by routes/users.js
@@ -37,15 +38,19 @@ exports.getByUsername = async function getByUsername(username) {
   return data;
 };
 
-// Creates a book with values specified in POST request
+// Creates a user with values specified in POST request
 exports.create = async function create(user) {
   const query = 'INSERT INTO users SET ?';
+  let { password } = user;
+  // Encrypt the password 10 times
+  const hash = bcrypt.hashSync(password, 10);
+  user.password = hash;
   const values = [user];
   const data = await db.runQuery(query, values);
   return data;
 };
 
-// Update a specified book with values in POST request
+// Update a specified user with values in POST request
 exports.update = async function update(user) {
   const query = 'UPDATE users SET ? WHERE ID = ?;';
   const values = [user, user.ID];
@@ -53,7 +58,7 @@ exports.update = async function update(user) {
   return data;
 };
 
-// Delete book with specified ID
+// Delete user with specified ID
 exports.remove = async function remove(id) {
   const query = 'DELETE FROM users WHERE ID = ?;';
   const values = [id];

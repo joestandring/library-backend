@@ -8,6 +8,8 @@ const Router = require('koa-router');
 // bodyParser is used to extract the body of a HTTP request
 const bodyParser = require('koa-bodyparser');
 const model = require('../models/users.js');
+// Authenticate routes using auth middleware
+const auth = require('../controllers/auth');
 
 // Use the /users endpoint
 const router = Router({ prefix: '/api/v1/users' });
@@ -51,6 +53,7 @@ async function create(ctx) {
 }
 
 // Update a specified user with values in POST request
+// TODO: Allow updating passwords with bcrypt
 async function update(ctx) {
   const { id } = ctx.params;
   // Check if the book exists
@@ -61,6 +64,7 @@ async function update(ctx) {
     // These fields are not updated by the user
     const {
       ID,
+      password,
       passwordSalt,
       ...body
     } = ctx.request.body;
@@ -90,8 +94,9 @@ async function remove(ctx) {
 router.get('/', getAll);
 router.get('/:id([0-9]{1,})', getByID);
 router.post('/', bodyParser(), create);
-router.put('/:id([0-9]{1,})', bodyParser(), update);
-router.del('/:id([0-9]{1,})', remove);
+// 'auth' is used to verify user information BEFORE the model function is run
+router.put('/:id([0-9]{1,})', auth, bodyParser(), update);
+router.del('/:id([0-9]{1,})', auth, remove);
 
 // Export for use in index.js
 module.exports = router;
