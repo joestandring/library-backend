@@ -29,6 +29,14 @@ exports.getByID = async function getByID(id) {
   return data;
 };
 
+// Respond with a single user specified by username
+exports.getByUsername = async function getByUsername(username) {
+  const query = 'SELECT * FROM users WHERE username = ?;';
+  const values = [username];
+  const data = await db.runQuery(query, values);
+  return data;
+};
+
 // Creates a book with values specified in POST request
 exports.create = async function create(user) {
   const query = 'INSERT INTO users SET ?';
