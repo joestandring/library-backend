@@ -8,7 +8,7 @@ const router = new Router();
 // Import route files
 const books = require('./routes/books.js');
 const users = require('./routes/users.js');
-const requests = require('./routes/requests.js')
+const requests = require('./routes/requests.js');
 
 // Runs on GET request to /api/v1. Greets user
 function welcome(ctx) {
