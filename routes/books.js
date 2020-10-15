@@ -61,7 +61,7 @@ async function create(ctx) {
   }
 }
 
-// Update a specified book with values in POST request
+// Update a specified book with values in PUT request
 async function update(ctx) {
   const { id } = ctx.params;
   // Check if the book is owned by the authenticated user

@@ -97,3 +97,4 @@ $ npm start
 $ npm run linter
 ```
 and fix all errors/warnings before commiting.
+
