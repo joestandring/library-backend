@@ -23,7 +23,8 @@
     "koa-router": "^9.4.0",
     "nodemon": "^2.0.4",
     "passport-http": "^0.3.0",
-    "promise-mysql": "^4.1.3"
+    "promise-mysql": "^4.1.3",
+    "role-acl": "^4.5.4"
   },
   "devDependencies": {
     "eslint": "^7.10.0",
