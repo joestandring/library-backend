@@ -10,6 +10,8 @@ const bodyParser = require('koa-bodyparser');
 const model = require('../models/users.js');
 // Authenticate routes using auth middleware
 const auth = require('../controllers/auth');
+// Use the role-acl permissions set up in permissions/users.js
+const can = require('../permissions/users');
 // Validate routes using validation middleware
 const { validateUser } = require('../controllers/validation');
 
@@ -18,18 +20,25 @@ const router = Router({ prefix: '/api/v1/users' });
 
 // Respond with all users
 async function getAll(ctx) {
-  // Set default values, overwritten by values in request
-  const {
-    page = 1,
-    limit = 100,
-    order = 'ID',
-    direction = 'asc',
-  } = ctx.request.query;
-  const result = await model.getAll(page, limit, order, direction);
-  // If the response is not empty
-  if (result.length) {
-    ctx.status = 200;
-    ctx.body = result;
+  // Run permissions check. Only administrator role should be authorized
+  const permission = can.readAll(ctx.state.user);
+  // Check failed
+  if (!permission.granted) {
+    ctx.status = 403;
+    ctx.body = 'Permission check failed';
+  } else {
+    const {
+      page = 1,
+      limit = 100,
+      order = 'ID',
+      direction = 'asc',
+    } = ctx.request.query
+    const result = await model.getAll(page, limit, order, direction);
+    // If the response is not empty
+    if (result.length) {
+      ctx.status = 200;
+      ctx.body = result;
+    }
   }
 }
 
@@ -93,7 +102,7 @@ async function remove(ctx) {
 }
 
 // Functions to run on URI and HTTP method (located in modules/users.js)
-router.get('/', getAll);
+router.get('/', auth, getAll);
 router.get('/:id([0-9]{1,})', getByID);
 // 'validateUser' is used to validate body content BEFORE the model function is run
 router.post('/', bodyParser(), validateUser, create);
