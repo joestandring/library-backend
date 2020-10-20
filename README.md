@@ -4,19 +4,24 @@ An API backend for a book lending service using Node.js, Koa, and MySQL
 This document contains information for installing, setting up, and configuring the backend API. For information regarding requests supported by this API see the online documentation at [INSERT LINK].
 
 # Installing
-- Clone the repository:
+Clone the repository:
 ```
 $ git clone https://github.coventry.ac.uk/304CEM-2021SEPJAN/standringj-backend.git
 ```
-- Install the package:
+Install the package:
 ```
 $ cd standringj-backend
 $ npm install
 ```
 # Database configuration
-- This API uses ```promises-mysql``` package to interface with a MySQL database on the server.
+This API uses ```promises-mysql``` package to interface with a MySQL database on the server.
 ## Creating tables
-- To start using this API, you will need to create a new MySQL database containing 3 tables with the following columns:
+To start using this API, you will need to create a new MySQL database containing 3 tables with the following columns
+To do this, you can use the included ```create-db.sh``` script:
+```
+$ sql-scripts/create-db.sh USERNAME PASSWORD
+```
+Where ```USERNAME``` is your MySQL username and ```PASSWORD``` is your MySQL password
 ### books
 ```
 +-------------+---------------+------+-----+-------------------+----------------+
@@ -67,8 +72,8 @@ $ npm install
 +---------+--------------+------+-----+---------+----------------+
 ```
 ## Configuration
-- For the API to use the database, it must be configured using a ```.config.js``` file.
-- To create a new ```config.js``` file, you can copy the existing template:
+For the API to use the database, it must be configured using a ```.config.js``` file.
+To create a new ```config.js``` file, you can copy the existing template:
 ```
 $ cp .config.template.js .config.js
 ```
@@ -85,14 +90,14 @@ exports.config = {
 ```
 
 # Running the database
-- To run the database, you can use the ```start``` script to run ```index.js``` with ```nodemon```. This means that the server will update when any files are changed:
+To run the database, you can use the ```start``` script to run ```index.js``` with ```nodemon```. This means that the server will update when any files are changed:
 ```
 $ npm start
 ```
 
 # Linting
-- Files in this project use the [Airbnb JavaScript Style](https://github.com/airbnb/javascript) to keep code consistent. This is enforced using the ```eslint``` rules in ```.eslint.rc```. 
-- Whenever you make any changes to files in this project, you should run the linter using:
+Files in this project use the [Airbnb JavaScript Style](https://github.com/airbnb/javascript) to keep code consistent. This is enforced using the ```eslint``` rules in ```.eslint.rc```. 
+Whenever you make any changes to files in this project, you should run the linter using:
 ```
 $ npm run linter
 ```
