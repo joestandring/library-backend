@@ -10,6 +10,8 @@ const bodyParser = require('koa-bodyparser');
 const model = require('../models/requests.js');
 // Authenticate routes using auth middleware
 const auth = require('../controllers/auth');
+// Validate routes using validation middleware
+const { validateRequest } = require('../controllers/validation');
 
 // Use the /requests endpoint
 const router = Router({ prefix: '/api/v1/requests' });
@@ -114,8 +116,8 @@ router.get('/', auth, getAll);
 router.get('/:id([0-9]{1,})', auth, getByID);
 router.get('/user/:id([0-9]{1,})', auth, getByUserID);
 router.get('/book/:id([0-9]{1,})', auth, getByBookID);
-router.post('/', bodyParser(), auth, create);
-router.put('/:id([0-9]{1,})', auth, bodyParser(), update);
+router.post('/', auth, bodyParser(), validateRequest, create);
+router.put('/:id([0-9]{1,})', auth, bodyParser(), validateRequest, update);
 router.del('/:id([0-9]{1,})', auth, remove);
 
 // Export for use in index.js
