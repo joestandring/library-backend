@@ -81,21 +81,29 @@ async function update(ctx) {
   let result = await model.getByID(id);
   // If the response is not empty
   if (result.length) {
+    // Run permissions check. Only admins and the single user should be authorized
     const user = result[0];
-    // These fields are not updated by the user
-    const {
-      ID,
-      password,
-      passwordSalt,
-      ...body
-    } = ctx.request.body;
-    // Update allowed fields
-    Object.assign(user, body);
-    result = await model.update(user);
-    // If any rows have been changed
-    if (result.affectedRows) {
-      ctx.status = 201;
-      ctx.body = { ID: id, updated: true, link: ctx.request.path };
+    const permission = can.update(ctx.state.user, user);
+    // Check failed
+    if (!permission.granted) {
+      ctx.status = 403;
+      ctx.body = 'Permission check failed';
+    } else {
+      // These fields are not updated by the user
+      const {
+        ID,
+        password,
+        passwordSalt,
+        ...body
+      } = ctx.request.body;
+      // Update allowed fields
+      Object.assign(user, body);
+      result = await model.update(user);
+      // If any rows have been changed
+      if (result.affectedRows) {
+        ctx.status = 201;
+        ctx.body = { ID: id, updated: true, link: ctx.request.path };
+      }
     }
   }
 }

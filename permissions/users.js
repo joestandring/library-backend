@@ -10,7 +10,7 @@ const ac = new AccessControl();
 // Grant the user role read and update functionality on their own object
 // Do not read password or passwordSalt
 ac.grant('user')
-  .condition({ Fn: 'EQUALS', args: { requester:'$.owner' } })
+  .condition({ Fn: 'EQUALS', args: { requester: '$.owner' } })
   .execute('read')
   .on('user', ['*', '!password', '!passwordSalt']);
 ac.grant('user')
