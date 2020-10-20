@@ -32,7 +32,7 @@ async function getAll(ctx) {
       limit = 100,
       order = 'ID',
       direction = 'asc',
-    } = ctx.request.query
+    } = ctx.request.query;
     const result = await model.getAll(page, limit, order, direction);
     // If the response is not empty
     if (result.length) {
@@ -47,8 +47,18 @@ async function getByID(ctx) {
   const result = await model.getByID(ctx.params.id);
   // If the response is not empty
   if (result.length) {
-    ctx.status = 200;
-    [ctx.body] = result;
+    // Run permissions check. Only admins and the single user should be authorized
+    const data = result[0];
+    const permission = can.read(ctx.state.user, data);
+    // Check failed
+    if (!permission.granted) {
+      ctx.status = 403;
+      ctx.body = 'Permission check failed';
+    } else {
+      // Only show values specified in permissions/users.js
+      ctx.body = permission.filter(data);
+      ctx.status = 200;
+    }
   }
 }
 
@@ -103,7 +113,7 @@ async function remove(ctx) {
 
 // Functions to run on URI and HTTP method (located in modules/users.js)
 router.get('/', auth, getAll);
-router.get('/:id([0-9]{1,})', getByID);
+router.get('/:id([0-9]{1,})', auth, getByID);
 // 'validateUser' is used to validate body content BEFORE the model function is run
 router.post('/', bodyParser(), validateUser, create);
 // 'auth' is used to verify user information BEFORE the model function is run
