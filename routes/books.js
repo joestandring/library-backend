@@ -10,6 +10,8 @@ const bodyParser = require('koa-bodyparser');
 const model = require('../models/books.js');
 // Authenticate routes using auth middleware
 const auth = require('../controllers/auth');
+// Use the role-acl permissions set up in permissions/users.js
+const can = require('../permissions/books');
 // Use the /books endpoint
 const router = Router({ prefix: '/api/v1/books' });
 
