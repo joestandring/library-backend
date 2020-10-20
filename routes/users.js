@@ -77,7 +77,7 @@ async function create(ctx) {
 // TODO: Allow updating passwords with bcrypt
 async function update(ctx) {
   const { id } = ctx.params;
-  // Check if the book exists
+  // Check if the user exists
   let result = await model.getByID(id);
   // If the response is not empty
   if (result.length) {
@@ -111,20 +111,34 @@ async function update(ctx) {
 // Delete user with specified ID
 async function remove(ctx) {
   const { id } = ctx.params;
-  const result = await model.remove(id);
-  // If any rows have been deleted
-  if (result.affectedRows) {
-    ctx.status = 200;
-    ctx.body = { ID: id, deleted: true };
+  // Check if the user exists
+  let result = await model.getByID(id);
+  // If the response is not empty
+  if (result.length) {
+    // Run permissions check. Only admins and the single user should be authorized
+    const data = result[0];
+    const permission = can.delete(ctx.state.user, data);
+    // Check failed
+    if (!permission.granted) {
+      ctx.status = 403;
+      ctx.body = 'Permission check failed';
+    } else {
+      result = await model.remove(id);
+      // If any rows have been deleted
+      if (result.affectedRows) {
+        ctx.status = 200;
+        ctx.body = { ID: id, deleted: true };
+      }
+    }
   }
 }
 
 // Functions to run on URI and HTTP method (located in modules/users.js)
+// 'auth' is used to verify user information BEFORE the model function is run
 router.get('/', auth, getAll);
 router.get('/:id([0-9]{1,})', auth, getByID);
 // 'validateUser' is used to validate body content BEFORE the model function is run
 router.post('/', bodyParser(), validateUser, create);
-// 'auth' is used to verify user information BEFORE the model function is run
 router.put('/:id([0-9]{1,})', auth, bodyParser(), validateUser, update);
 router.del('/:id([0-9]{1,})', auth, remove);
 

@@ -7,7 +7,7 @@ const AccessControl = require('role-acl');
 
 const ac = new AccessControl();
 
-// Grant the user role read and update functionality on their own object
+// Grant the user role read, update and delete functionality on their own object
 // Do not read password or passwordSalt
 ac.grant('user')
   .condition({ Fn: 'EQUALS', args: { requester: '$.owner' } })
@@ -17,6 +17,10 @@ ac.grant('user')
   .condition({ Fn: 'EQUALS', args: { requester: '$.owner' } })
   .execute('update')
   .on('user', ['*', '!ID', '!password', '!passwordSalt']);
+ac.grant('user')
+  .condition({ Fn: 'EQUALS', args: { requester: '$.owner' } })
+  .execute('delete')
+  .on('user');
 
 // Grant admin read, update, and delete rights for users
 ac.grant('admin')
