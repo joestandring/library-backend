@@ -1,0 +1,17 @@
+CREATE TABLE users (
+  ID INT NOT NULL AUTO_INCREMENT,
+  role VARCHAR(16) NOT NULL DEFAULT 'user',
+  username VARCHAR(32) UNIQUE NOT NULL ,
+  email VARCHAR(64) UNIQUE NOT NULL,
+  password VARCHAR(64) NOT NULL,
+  passwordSalt VARCHAR(16),
+  firstName VARCHAR(32) NOT NULL,
+  lastName VARCHAR(32) NOT NULL,
+  address1 VARCHAR(64) NOT NULL,
+  address2 VARCHAR(64),
+  address3 VARCHAR(64),
+  city VARCHAR(32) NOT NULL,
+  postcode VARCHAR(8) NOT NULl,
+  PRIMARY KEY (ID),
+  FOREIGN KEY (role) REFERENCES roles (name)
+);
