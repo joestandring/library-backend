@@ -33,6 +33,7 @@ ac.grant('admin')
   .execute('update')
   .on('user');
 ac.grant('admin')
+  // Cannot delete self
   .condition({ Fn: 'NOT_EQUALS', args: { requester: '$.owner' } })
   .execute('delete')
   .on('user');
