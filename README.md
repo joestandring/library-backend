@@ -71,6 +71,15 @@ Where ```USERNAME``` is your MySQL username and ```PASSWORD``` is your MySQL pas
 | message | varchar(256) | YES  |     | NULL    |                |
 +---------+--------------+------+-----+---------+----------------+
 ```
+### roles
+```
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| name        | varchar(16) | NO   | PRI | NULL    |       |
+| description | text        | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+```
 ## Configuration
 For the API to use the database, it must be configured using a ```.config.js``` file.
 To create a new ```config.js``` file, you can copy the existing template:
