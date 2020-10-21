@@ -1,0 +1,21 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Book Lending API Backend
+  description: An API backend for a book lending service
+  contact:
+    name: Joe Standring
+    email: git@joestandring.com
+  license:
+    name: MIT
+    url: 'https://opensource.org/licenses/MIT'
+servers:
+  - url: 'https://mixer-fiona-3000.codio-box.uk/api/v1'
+    description: Development server
+tags:
+  - name: Users
+    description: Endpoints for user account management
+  - name: Books:
+    description: Endpoints for viewing and managing books
+  - name: Requests:
+    description: Endpoints for viewing and managing user requests to borrow books

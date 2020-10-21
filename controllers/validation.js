@@ -4,9 +4,9 @@
 */
 
 const { Validator, ValidationError } = require('jsonschema');
-const userSchema = require('../schemas/user.schema.js');
-const bookSchema = require('../schemas/book.schema.js');
-const requestSchema = require('../schemas/request.schema.js');
+const userSchema = require('../schemas/user.json');
+const bookSchema = require('../schemas/book.json');
+const requestSchema = require('../schemas/request.json');
 
 // Validate a resource using the specified schema
 const makeValidator = (schema, resource) => {
