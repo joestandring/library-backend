@@ -69,33 +69,34 @@ async function create(ctx) {
 // Update a specified book with values in PUT request
 async function update(ctx) {
   const { id } = ctx.params;
-  // Check if the book is owned by the authenticated user
-  if (id === ctx.state.user.ID) {
-    // Check if the book exists
-    let result = await model.getByID(id);
-    // If the response is not empty
-    if (result.length) {
-      const book = result[0];
-      // These fields are not updated by the user
+  // Check book exists
+  let result = await model.getByID(id);
+  if (result.length) {
+    // Permissions check
+    const data = result[0];
+    const permission = can.update(ctx.state.user, data);
+    // Check failed
+    if (!permission.granted) {
+      ctx.status = 403;
+      ctx.body = 'Permission check failed';
+    } else {
+      // Fields not updated by user
       const {
         ID,
+        ownerID,
         available,
         dateAdded,
-        ownerID,
         ...body
       } = ctx.request.body;
       // Update allowed fields
-      Object.assign(book, body);
-      result = await model.update(book);
-      // If any rows have been changed
+      Object.assign(data, body);
+      result = await model.update(data);
+      // If rows changed
       if (result.affectedRows) {
         ctx.status = 201;
         ctx.body = { ID: id, updated: true, link: ctx.request.path };
       }
     }
-  } else {
-    ctx.status = 403;
-    ctx.body = 'You are not permitted to edit this entry';
   }
 }
 

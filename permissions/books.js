@@ -12,6 +12,10 @@ ac.grant('user')
   .condition({ Fn: 'EQUALS', args: { requester: '$.owner' } })
   .execute('delete')
   .on('book');
+ac.grant('user')
+  .condition({ Fn: 'EQUALS', args: { requester: '$.owner' } })
+  .execute('update')
+  .on('book', ['*', '!ID', '!ownerID', '!available,', '!dateAdded']);
 
 // Grant admin rights for books
 ac.grant('admin')

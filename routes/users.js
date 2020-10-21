@@ -82,8 +82,8 @@ async function update(ctx) {
   // If the response is not empty
   if (result.length) {
     // Run permissions check. Only admins and the single user should be authorized
-    const user = result[0];
-    const permission = can.update(ctx.state.user, user);
+    const data = result[0];
+    const permission = can.update(ctx.state.user, data);
     // Check failed
     if (!permission.granted) {
       ctx.status = 403;
@@ -97,8 +97,8 @@ async function update(ctx) {
         ...body
       } = ctx.request.body;
       // Update allowed fields
-      Object.assign(user, body);
-      result = await model.update(user);
+      Object.assign(data, body);
+      result = await model.update(data);
       // If any rows have been changed
       if (result.affectedRows) {
         ctx.status = 201;
