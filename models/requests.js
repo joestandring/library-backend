@@ -46,8 +46,10 @@ exports.getByBookID = async function getByBookID(id) {
 };
 
 // Creates a book with values specified in POST request
-exports.create = async function create(request) {
+exports.create = async function create(request, id) {
   const query = 'INSERT INTO requests SET ?';
+  // USer ID is the authenticated user's ID
+  request.userID = id;
   const values = [request];
   const data = await db.runQuery(query, values);
   return data;
