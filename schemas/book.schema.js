@@ -8,6 +8,8 @@ module.exports = {
     isbn: {
       description: '13 digit International Standard Book Number of this edition of the book',
       type: 'string',
+      minLength: 13,
+      maxLength: 13,
     },
     title: {
       description: 'The title of the book',
