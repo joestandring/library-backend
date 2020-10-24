@@ -77,7 +77,7 @@ async function update(ctx) {
     const permission = can.update(ctx.state.user, data);
     // Check failed
     if (!permission.granted) {
-      ctx.status = 403;
+      ctx.status = 401;
       ctx.body = 'Permission check failed';
     } else {
       // Fields not updated by user
@@ -111,7 +111,7 @@ async function remove(ctx) {
     const permission = can.delete(ctx.state.user, data);
     // Check failed
     if (!permission.granted) {
-      ctx.status = 403;
+      ctx.status = 401;
       ctx.body = 'Permission check failed';
     } else {
       result = await model.remove(id);

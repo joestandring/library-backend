@@ -14,8 +14,58 @@ servers:
     description: Development server
 tags:
   - name: Users
-    description: Endpoints for user account management
+    description: Endpoints for user account management.
   - name: Books:
-    description: Endpoints for viewing and managing books
+    description: Endpoints for viewing and managing books.
   - name: Requests:
-    description: Endpoints for viewing and managing user requests to borrow books
+    description: Endpoints for viewing and managing user requests to borrow books.
+paths:
+  /books/:
+    get:
+      tags:
+        - Books
+      description:
+        Get all registered books.
+      responses:
+        '200':
+          description: View of all books.
+  /books/{id}:
+    get:
+      tags:
+        - Books
+      description:
+        "Get a single book by it's ID."
+      responses:
+        '200':
+          description:
+            View of a single book.
+        '404':
+          description:
+            Book was not found.
+    put:
+      tags:
+        - Books
+      description:
+        "Edit a single book by it's ID."
+      responses:
+        '201':
+          description:
+            Book was successfully updated.
+        '401':
+          description:
+            Non-admin users can only update their own books.
+        '404':
+          description:
+            Book was not found.
+            
+    delete:
+      tags:
+        - Books
+      description:
+        "Delete a single book by it's ID."
+  /books/{userID}:
+    get:
+      tags:
+        - Books
+      description:
+        "Get a single book by it's owner's ID."
