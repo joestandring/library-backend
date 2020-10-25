@@ -242,6 +242,10 @@ paths:
         '200':
           description:
             View of all users.
+          content:
+            application/json:
+              schema:
+                $ref: ./user.json#/definitions/userGet
         '401':
           description:
             Non-admin users cannot get all users
@@ -250,10 +254,21 @@ paths:
         - Users
       description:
         Create a new user account.
+      requestBody:
+        description: New user data.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ./user.json#/definitions/user
       responses:
         '201':
           description:
             User successfully added.
+          content:
+            application/json:
+              schema:
+                $ref: ./user.json#/definitions/userCreated
         '400':
           description:
             Improperly formatted request.
@@ -275,6 +290,10 @@ paths:
         '200':
           description:
             View of a singe user.
+          content:
+            application/json:
+              schema:
+                $ref: ./user.json#/definitions/userGet
         '401':
           description:
             You must be signed in to view a user account.
@@ -286,10 +305,21 @@ paths:
         - Users
       description:
         Edit a single user account by ID.
+      requestBody:
+        description: New user data.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ./user.json#/definitions/user
       responses:
         '201':
           description:
             User was successfully updated.
+          content:
+            application/json:
+              schema:
+                $ref: ./user.json#/definitions/userCreated
         '400':
           description:
             Improperly formatted request.
@@ -308,6 +338,10 @@ paths:
         '200':
           description:
             User was successfully deleted.
+          content:
+            application/json:
+              schema:
+                $ref: ./user.json#/definitions/userDeleted
         '401':
           description:
             Non-admin users can only delete their own accounts.

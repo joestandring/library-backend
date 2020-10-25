@@ -4,7 +4,7 @@
 */
 
 const { Validator, ValidationError } = require('jsonschema');
-const userSchema = require('../schemas/user.json');
+const userSchema = require('../schemas/user.json').definitions.user;
 const bookSchema = require('../schemas/book.json');
 const requestSchema = require('../schemas/request.json');
 
