@@ -50,6 +50,10 @@ paths:
         '200':
           description:
             View of all books.
+          content:
+            application/json:
+              schema:
+                $ref: ./book.json#/definitions/bookGet
     post:
       tags:
         - Books
@@ -59,6 +63,10 @@ paths:
         '201':
           description: 
             Book successfully added.
+          content:
+            application/json:
+              schema:
+                $ref: ./book.json#/definitions/bookCreated
         '400':
           description:
             Improperly formatted request.
@@ -83,6 +91,10 @@ paths:
         '200':
           description:
             View of a single book.
+          content:
+            application/json:
+              schema:
+                $ref: ./book.json#/definitions/bookGet
         '404':
           description:
             Book was not found.
@@ -95,6 +107,10 @@ paths:
         '201':
           description:
             Book was successfully updated.
+          content:
+            application/json:
+              schema:
+                $ref: ./book.json#/definitions/bookCreated
         '400':
           description:
             Improperly formatted request.
@@ -113,6 +129,10 @@ paths:
         '200':
           description:
             Book was successfully deleted.
+          content:
+            application/json:
+              schema:
+                $ref: ./book.json#/definitions/bookDeleted
         '401':
           description:
             Non-admin users can only delete their own books.
@@ -137,6 +157,10 @@ paths:
         '200':
           description:
             View of a single book.
+          content:
+            application/json:
+              schema:
+                $ref: ./book.json#/definitions/bookGet
         '404':
           description:
             Book was not found.
