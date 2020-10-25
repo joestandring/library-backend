@@ -19,8 +19,10 @@
     "jsonschema": "^1.2.11",
     "koa": "^2.13.0",
     "koa-bodyparser": "^4.3.0",
+    "koa-mount": "^4.0.0",
     "koa-passport": "^4.1.3",
     "koa-router": "^9.4.0",
+    "koa-static": "^5.0.0",
     "nodemon": "^2.0.4",
     "passport-http": "^0.3.0",
     "promise-mysql": "^4.1.3",
@@ -29,6 +31,7 @@
   "devDependencies": {
     "eslint": "^7.10.0",
     "eslint-config-airbnb-base": "^14.2.0",
-    "eslint-plugin-import": "^2.22.1"
+    "eslint-plugin-import": "^2.22.1",
+    "redoc": "^2.0.0-rc.40"
   }
 }

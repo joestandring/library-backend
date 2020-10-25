@@ -26,7 +26,7 @@ async function getAll(ctx) {
   const permission = can.readAll(ctx.state.user);
   // Check failed
   if (!permission.granted) {
-    ctx.status = 403;
+    ctx.status = 401;
     ctx.body = 'Permission check failed';
   } else {
     // Set default values, overwritten by values in request
@@ -57,7 +57,7 @@ async function getByID(ctx) {
     const permission = can.read(ctx.state.user, result[0], data);
     // Check failed
     if (!permission.granted) {
-      ctx.status = 403;
+      ctx.status = 401;
       ctx.body = 'Permission check failed';
     } else {
       // Only show values specified in permissions/requests.js
@@ -90,7 +90,7 @@ async function update(ctx) {
     const permission = can.update(ctx.state.user, data);
     // Check failed
     if (!permission.granted) {
-      ctx.status = 403;
+      ctx.status = 401;
       ctx.body = 'Permission check failed';
     } else {
       // These fields are not updated by the user
@@ -123,7 +123,7 @@ async function remove(ctx) {
     const permission = can.delete(ctx.state.user, data);
     // Check failed
     if (!permission.granted) {
-      ctx.status = 403;
+      ctx.status = 401;
       ctx.body = 'Permission check failed';
     } else {
       result = await model.remove(id);

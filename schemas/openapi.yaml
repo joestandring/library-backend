@@ -13,14 +13,34 @@ servers:
   - url: 'https://mixer-fiona-3000.codio-box.uk/api/v1'
     description: Development server
 tags:
+  - name: Books
+    description: Endpoints for viewing and managing books.
+  - name: Requests
+    description: Endpoints for viewing and managing user requests to borrow books.
   - name: Users
     description: Endpoints for user account management.
-  - name: Books:
-    description: Endpoints for viewing and managing books.
-  - name: Requests:
-    description: Endpoints for viewing and managing user requests to borrow books.
 paths:
-  /books/:
+  /:
+    summary:
+      Root endpoint for API.
+    description: >
+      This endpoint is used as the root of the API.
+      A welcome message is displayed upon a GET request.
+    get:
+      tags:
+        - Welcome
+      description:
+        Welcomes the user to the API.
+      responses:
+        '200':
+          description:
+            Welcome message displayed.
+  /books:
+    summary:
+      Represents an individual book.
+    description: >
+      This resource represents an individual book in the system.
+      Each book is represented by a numeric ID.
     get:
       tags:
         - Books
@@ -28,13 +48,37 @@ paths:
         Get all registered books.
       responses:
         '200':
-          description: View of all books.
+          description:
+            View of all books.
+    post:
+      tags:
+        - Books
+      description:
+        Add a new book to the database.
+      responses:
+        '201':
+          description: 
+            Book successfully added.
+        '400':
+          description:
+            Improperly formatted request.
+        '401':
+          description:
+            You must be signed in to add books.
   /books/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+        description:
+          Numeric ID of book.
     get:
       tags:
         - Books
       description:
-        "Get a single book by it's ID."
+        Get a single book by ID.
       responses:
         '200':
           description:
@@ -46,26 +90,227 @@ paths:
       tags:
         - Books
       description:
-        "Edit a single book by it's ID."
+        Edit a single book by ID.
       responses:
         '201':
           description:
             Book was successfully updated.
+        '400':
+          description:
+            Improperly formatted request.
         '401':
           description:
             Non-admin users can only update their own books.
         '404':
           description:
             Book was not found.
-            
     delete:
       tags:
         - Books
       description:
-        "Delete a single book by it's ID."
+        Delete a single book by ID.
+      responses:
+        '200':
+          description:
+            Book was successfully deleted.
+        '401':
+          description:
+            Non-admin users can only delete their own books.
+        '404':
+          description:
+            Book was not found.
   /books/{userID}:
+    parameters:
+      - in: path
+        name: userID
+        schema:
+          type: integer
+        required: true
+        description:
+          Numeric ID of a user.
     get:
       tags:
         - Books
       description:
-        "Get a single book by it's owner's ID."
+        Get a single book by owner ID.
+      responses:
+        '200':
+          description:
+            View of a single book.
+        '404':
+          description:
+            Book was not found.
+  /requests:
+    summary:
+      Represents an individual request for a book.
+    description: >
+      This resource represents a request for a book in the system.
+      Each request is represented by a numeric ID.
+    get:
+      tags:
+        - Requests
+      description:
+        Get all user requests for books.
+      responses:
+        '200':
+          description:
+            View of all book requests.
+        '401':
+          description:
+            Non-admin users cannot see all book requests.
+    post:
+      tags:
+        - Requests
+      description:
+        Create a request for a book.
+      responses:
+        '201':
+          description:
+            Request was successfully made for book.
+        '401':
+          description:
+            You must be signed in to make book requests.
+  /requests/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+        description:
+          Numeric ID of a book request.
+    get:
+      tags:
+        - Requests
+      description:
+        Get a book request by ID.
+      responses:
+        '200':
+          description:
+            View of a single book request.
+        '401':
+          description:
+            Non-admin users can only view their own book requests.
+        '404':
+          description:
+            Request for book was not found.
+    put:
+      tags:
+        - Requests
+      description:
+        Edit a single book request by ID.
+      responses:
+        '201':
+          description:
+            Book request was successfully updated.
+        '400':
+          description:
+            Improperly formatted request.
+        '401':
+          description:
+            Non-admin users can only update their own book requests.
+        '404':
+          description:
+            Book request was not found.
+    delete:
+      tags:
+        - Requests
+      description:
+        Delete a single book by ID.
+      responses:
+        '200':
+          description:
+            Book request was successfully deleted.
+        '401':
+          description:
+            Non-admin users can only delete their own book requests.
+        '404':
+          description:
+            Book request was not found.
+  /users:
+    summary:
+      Represents an individual user.
+    description: >
+      This resource represents a user account in the system.
+      Each user is represented by a numeric ID.
+    get:
+      tags:
+        - Users
+      description:
+        Get all registered users.
+      responses:
+        '200':
+          description:
+            View of all users.
+        '401':
+          description:
+            Non-admin users cannot get all users
+    post:
+      tags:
+        - Users
+      description:
+        Create a new user account.
+      responses:
+        '201':
+          description:
+            User successfully added.
+        '400':
+          description:
+            Improperly formatted request.
+  /users/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+        description:
+          Numeric ID of a user account.
+    get:
+      tags:
+        - Users
+      description:
+        Get a single user account by ID.
+      responses:
+        '200':
+          description:
+            View of a singe user.
+        '401':
+          description:
+            You must be signed in to view a user account.
+        '404':
+          description:
+            User was not found.
+    put:
+      tags:
+        - Users
+      description:
+        Edit a single user account by ID.
+      responses:
+        '201':
+          description:
+            User was successfully updated.
+        '400':
+          description:
+            Improperly formatted request.
+        '401':
+          description:
+            Non-admin users can only update their own accounts.
+        '404':
+          description:
+            User was not found.
+    delete:
+      tags:
+        - Users
+      description:
+        Delete a single user account by ID.
+      responses:
+        '200':
+          description:
+            User was successfully deleted.
+        '401':
+          description:
+            Non-admin users can only delete their own accounts.
+        '404':
+          description:
+            User was not found.
