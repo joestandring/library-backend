@@ -1,7 +1,12 @@
 # Book Lending API Backend
 An API backend for a book lending service using Node.js, Koa, and MySQL
 
-This document contains information for installing, setting up, and configuring the backend API. For information regarding requests supported by this API see the online documentation at [INSERT LINK].
+This document contains information for installing, setting up, and configuring the backend API.
+To start and update the documentation server, run ```npm run docs```
+With the server running, you can go to:
+- http://localhost:3030/ for JavaScript documentation
+- http://localhost:3030/openapi for OpenAPI documentation
+- http://localhost:3030/schemas to view jsonschemas
 
 # Installing
 Clone the repository:
@@ -103,6 +108,7 @@ To run the database, you can use the ```start``` script to run ```index.js``` wi
 ```
 $ npm start
 ```
+You can then access the API at http://localhost:3000/api/v1
 
 # Linting
 Files in this project use the [Airbnb JavaScript Style](https://github.com/airbnb/javascript) to keep code consistent. This is enforced using the ```eslint``` rules in ```.eslint.rc```. 
