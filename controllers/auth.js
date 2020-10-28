@@ -1,12 +1,14 @@
-/*
- *  controllers/auth.js
- *  Authenticate incoming requests using basic auth defined in strategies/basic.js
-*/
+/**
+ * Authenticate incoming requests using basic auth
+ * @module controllers/auth
+ * @author Joe Standring
+ * @see strategies/basic.js for basic auth implementation
+ */
 
 const passport = require('koa-passport');
 const basic = require('../strategies/basic');
 
 passport.use(basic);
 
-// Export the authentication route handler. Does not use sessions to comply with REST
+/** Authenticate request with basic auth. Do not use sessions */
 module.exports = passport.authenticate(['basic'], { session: false });

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js",
-    "linter": "node_modules/.bin/eslint .",
+    "linter": "./node_modules/.bin/eslint .",
     "docs": "./node_modules/jsdoc/jsdoc.js -c jsdoc.conf.json && nodemon docs.js"
   },
   "repository": {

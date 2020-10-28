@@ -1,7 +1,9 @@
-/*
- * permissions/requests.js
- * Permissions configuration for books resource (routes/requests.js)
-*/
+/**
+ * Permissions configuration for requests resource
+ * @module permissions/requests
+ * @author Joe Standring
+ * @see routes/requests.js for where permissions are applied
+ */
 
 const AccessControl = require('role-acl');
 
@@ -37,24 +39,24 @@ ac.grant('admin')
   .on('request');
 
 // Export permissions checks (used by routes/requests.js)
-// Check if the requester's role parameter allows them to perform the action
+/** Check if the requester's role parameter allows them to perform the action */
 exports.readAll = (requester) => ac.can(requester.role)
   .execute('read')
   .sync()
   .on('requests');
-
+/** Check if the requester's role parameter allows them to perform the action */
 exports.read = (requester, bookData, data) => ac.can(requester.role)
   .context({ requester: requester.ID, owner: bookData.ownerID, user: data.userID })
   .execute('read')
   .sync()
   .on('request');
-
+/** Check if the requester's role parameter allows them to perform the action */
 exports.update = (requester, data) => ac.can(requester.role)
   .context({ requester: requester.ID, owner: data.userID })
   .execute('update')
   .sync()
   .on('request');
-
+/** Check if the requester's role parameter allows them to perform the action */
 exports.delete = (requester, data) => ac.can(requester.role)
   .context({ requester: requester.ID, owner: data.userID })
   .execute('delete')

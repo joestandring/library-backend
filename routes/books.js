@@ -1,7 +1,12 @@
-/*
- *  routes/books.js
- *  Responds to requests at /api/v1/books with functions in models/books.js
-*/
+/**
+ * Configure routes for books request and functions to export to model
+ * @module routes/books
+ * @author Joe Standring
+ * @see models/books.js for CRUD operations used by functions in this module
+ * @see controllers/auth.js for user authentication
+ * @see permissions/books.js for permissions management
+ * @see controllers/validation.js for jsonschema validation of requests
+ */
 
 // Create an instance of the router object, imported by index.js
 const Router = require('koa-router');
@@ -18,7 +23,10 @@ const { validateBook } = require('../controllers/validation');
 // Use the /books endpoint
 const router = Router({ prefix: '/api/v1/books' });
 
-// Respond with all books
+/**
+ * Send request data to model getAll function
+ * @param {object} ctx The Koa request/response context object
+ */
 async function getAll(ctx) {
   // Set default values, overwritten by values in request
   const {
@@ -35,7 +43,10 @@ async function getAll(ctx) {
   }
 }
 
-// Respond with a single book specified by id
+/**
+ * Send request data to model getByID function
+ * @param {object} ctx The Koa request/response context object
+ */
 async function getByID(ctx) {
   const result = await model.getByID(ctx.params.id);
   // If the response is not empty
@@ -45,7 +56,10 @@ async function getByID(ctx) {
   }
 }
 
-// Respond with books specified by it's owner's ID
+/**
+ * Send request data to model getByUserID function
+ * @param {object} ctx The Koa request/response context object
+ */
 async function getByUserID(ctx) {
   const result = await model.getByUserID(ctx.params.id);
   // If the response is not empty
@@ -55,7 +69,10 @@ async function getByUserID(ctx) {
   }
 }
 
-// Creates a book with values specified in POST request
+/**
+ * Send request data to model create function
+ * @param {object} ctx The Koa request/response context object
+ */
 async function create(ctx) {
   const result = await model.create(ctx.request.body, ctx.state.user.ID);
   // If any rows have been changed
@@ -66,7 +83,10 @@ async function create(ctx) {
   }
 }
 
-// Update a specified book with values in PUT request
+/**
+ * Send request data to model update function
+ * @param {object} ctx The Koa request/response context object
+ */
 async function update(ctx) {
   const { id } = ctx.params;
   // Check book exists
@@ -100,7 +120,10 @@ async function update(ctx) {
   }
 }
 
-// Delete book with specified ID
+/**
+ * Send request data to model remove function
+ * @param {object} ctx The Koa request/response context object
+ */
 async function remove(ctx) {
   const { id } = ctx.params;
   // Check if book exists
@@ -133,5 +156,5 @@ router.post('/', auth, bodyParser(), validateBook, create);
 router.put('/:id([0-9]{1,})', auth, bodyParser(), validateBook, update);
 router.del('/:id([0-9]{1,})', auth, remove);
 
-// Export for use in index.js
+/** Export defined routes */
 module.exports = router;

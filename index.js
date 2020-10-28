@@ -1,3 +1,10 @@
+/**
+ * The main entry point for application
+ * @module index
+ * @author Joe Standring
+ * @see routes/ For the routes exported and used here
+ */
+
 // Create instances of Koa and the router object
 const Koa = require('koa');
 const Router = require('koa-router');
@@ -10,7 +17,10 @@ const books = require('./routes/books.js');
 const users = require('./routes/users.js');
 const requests = require('./routes/requests.js');
 
-// Runs on GET request to /api/v1. Greets user
+/**
+ * Greets the user on GET request
+ * @param {object} ctx The Koa request/response context object
+ */
 function welcome(ctx) {
   ctx.body = {
     message: 'Welcome to the book lending API. For help installing and running the server, see README.md',

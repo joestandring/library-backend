@@ -1,7 +1,9 @@
-/*
- * permissions/users.js
- * Permissions configuration for users resource (routes/users.js)
-*/
+/**
+ * Permissions configuration for users resource
+ * @module permissions/users
+ * @author Joe Standring
+ * @see routes/users.js for where permissions are applied
+ */
 
 const AccessControl = require('role-acl');
 
@@ -39,24 +41,24 @@ ac.grant('admin')
   .on('user');
 
 // Export permissions checks (used by routes/users.js)
-// Check if the requester's role parameter allows them to perform the action
+/** Check if the requester's role parameter allows them to perform the action */
 exports.readAll = (requester) => ac.can(requester.role)
   .execute('read')
   .sync()
   .on('users');
-
+/** Check if the requester's role parameter allows them to perform the action */
 exports.read = (requester, data) => ac.can(requester.role)
   .context({ requester: requester.ID, owner: data.ID })
   .execute('read')
   .sync()
   .on('user');
-
+/** Check if the requester's role parameter allows them to perform the action */
 exports.update = (requester, data) => ac.can(requester.role)
   .context({ requester: requester.ID, owner: data.ID })
   .execute('update')
   .sync()
   .on('user');
-
+/** Check if the requester's role parameter allows them to perform the action */
 exports.delete = (requester, data) => ac.can(requester.role)
   .context({ requester: requester.ID, owner: data.ID })
   .execute('delete')

@@ -1,7 +1,9 @@
-/*
- * permissions/books.js
- * Permissions configuration for books resource (routes/books.js)
-*/
+/**
+ * Permissions configuration for books resource
+ * @module permissions/books
+ * @author Joe Standring
+ * @see routes/books.js for where permissions are applied
+ */
 
 const AccessControl = require('role-acl');
 
@@ -26,13 +28,13 @@ ac.grant('admin')
   .on('book');
 
 // Export permissions checks (used by routes/books.js)
-// Check if the requester's role parameter allows them to perform the action
+/** Check if the requester's role parameter allows them to perform the action */
 exports.update = (requester, data) => ac.can(requester.role)
   .context({ requester: requester.ID, owner: data.ownerID })
   .execute('update')
   .sync()
   .on('book');
-
+/** Check if the requester's role parameter allows them to perform the action */
 exports.delete = (requester, data) => ac.can(requester.role)
   .context({ requester: requester.ID, owner: data.ownerID })
   .execute('delete')

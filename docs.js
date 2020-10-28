@@ -1,3 +1,12 @@
+/**
+ * Generate OpenAPI and JSDocs documentation
+ * @module docs
+ * @author Joe Standring
+ * @see docs/jsdocs/ for the JSDocs documentation served here
+ * @see docs/openapi/index.html for the OpenAPI documentation served here
+ * @see schemas/ for the JSON schemas served here
+ */
+
 const Koa = require('koa');
 const serve = require('koa-static');
 const mount = require('koa-mount');
