@@ -4,8 +4,10 @@ const mount = require('koa-mount');
 
 const app = new Koa();
 
-// Serve docs/openapi/index.html
-app.use(mount('/', serve('./docs/openapi')));
+// Serve JSDocs
+app.use(mount('/', serve('./docs/jsdocs')));
+// Serce OpenAPI
+app.use(mount('/openapi', serve('./docs/openapi')));
 // Serve schemas
 app.use(mount('/schemas', serve('./schemas')));
 
