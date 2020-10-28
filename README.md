@@ -116,5 +116,5 @@ Whenever you make any changes to files in this project, you should run the linte
 ```
 $ npm run linter
 ```
-and fix all errors/warnings before commiting.
+and fix all errors/warnings before committing.
 
