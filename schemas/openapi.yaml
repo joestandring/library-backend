@@ -179,6 +179,10 @@ paths:
         '200':
           description:
             View of all book requests.
+          content:
+            application/json:
+              schema:
+                $ref: ./request.json#/definitions/requestGet
         '401':
           description:
             Non-admin users cannot see all book requests.
@@ -191,6 +195,10 @@ paths:
         '201':
           description:
             Request was successfully made for book.
+          content:
+            application/json:
+              schema:
+                $ref: ./request.json#/definitions/requestCreated
         '401':
           description:
             You must be signed in to make book requests.
@@ -212,6 +220,10 @@ paths:
         '200':
           description:
             View of a single book request.
+          content:
+            application/json:
+              schema:
+                $ref: ./request.json#/definitions/requestGet
         '401':
           description:
             Non-admin users can only view their own book requests.
@@ -227,6 +239,10 @@ paths:
         '201':
           description:
             Book request was successfully updated.
+          content:
+            application/json:
+              schema:
+                $ref: ./request.json#/definitions/requestCreated
         '400':
           description:
             Improperly formatted request.
@@ -245,6 +261,10 @@ paths:
         '200':
           description:
             Book request was successfully deleted.
+          content:
+            application/json:
+              schema:
+                $ref: ./request.json#/definitions/requestDeleted
         '401':
           description:
             Non-admin users can only delete their own book requests.

@@ -79,7 +79,7 @@
     "bookDeleted": {
       "$id": "#bookDeleted",
       "title": "Book Deleted",
-      "description": "Conformation of succsessful book deletion",
+      "description": "Confirmation of succsessful book deletion",
       "type": "object",
       "properties": {
         "ID": {
@@ -87,7 +87,7 @@
           "type": "integer"
         },
         "deleted": {
-          "description": "Boolean indicatorof success",
+          "description": "Boolean indicator of success",
           "type": "boolean"
         }
       }

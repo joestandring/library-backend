@@ -1,13 +1,66 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "id": "/request",
-  "title": "Request",
-  "description": "A user created request to borrow a book",
-  "type": "object",
-  "properties": {
-    "message": {
-      "description": "Message sent by user to the book owner when making a request",
-      "type": "string"
+  "definitions": {
+    "requestGet": {
+      "$id": "#bookGet",
+      "title": "Book Get",
+      "description": "Display book request object",
+      "type": "object",
+      "properties": {
+        "message": {
+          "description": "Message sent from requesting user to book owner",
+          "type": "string"
+        }
+      }
+    },
+    "requestCreated": {
+      "$id": "#requestCreated",
+      "title": "Request Created",
+      "description": "Confirmation of successful book request creation/update",
+      "type": "object",
+      "properties": {
+        "ID": {
+          "description": "ID of the book request record",
+          "type": "integer",
+        },
+        "updated": {
+          "description": "Boolean indicator of success",
+          "type": "boolean"
+        },
+        "link": {
+          "description": "Path to retreive book request record",
+          "type": "string",
+          "format": "uri"
+        }
+      }
+    },
+    "requestDeleted": {
+      "$id": "#requestDeleted",
+      "title": "Request Deleted",
+      "description": "Confirmation of successful book request deletion",
+      "type": "object",
+      "properties": {
+        "ID": {
+          "description": "ID of the book request record",
+          "type": "Integer"
+        },
+        "deleted": {
+          "description": "Boolean indicator of success",
+          "type": "boolean"
+        }
+      }
+    },
+    "request": {
+      "id": "#request",
+      "title": "Request",
+      "description": "A user created request to borrow a book",
+      "type": "object",
+      "properties": {
+        "message": {
+          "description": "Message sent by user to the book owner when making a request",
+          "type": "string"
+        }
+      }
     }
   }
 }
