@@ -42,8 +42,8 @@ async function getAll(ctx) {
     ctx.status = 200;
     ctx.body = result.map(book => {
       // Extract desired fields to return
-      const { ID, available, title, imgLink, authorFirst, authorLast, dateAdded, publishYear } = book;
-      return { ID, available, title, imgLink, authorFirst, authorLast, dateAdded, publishYear };
+      const { ID, available, title, summary, imgLink, authorFirst, authorLast, dateAdded, publishYear } = book;
+      return { ID, available, title, summary, imgLink, authorFirst, authorLast, dateAdded, publishYear };
     })
   }
 }
