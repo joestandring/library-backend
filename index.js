@@ -8,7 +8,7 @@
 // Create instances of Koa and the router object
 const Koa = require('koa');
 const Router = require('koa-router');
-const cord = require('@koa/cors');
+const cors = require('@koa/cors');
 
 const app = new Koa();
 const router = new Router();
