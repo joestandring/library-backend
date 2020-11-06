@@ -21,7 +21,7 @@
       "properties": {
         "ID": {
           "description": "ID of the book request record",
-          "type": "integer",
+          "type": "integer"
         },
         "updated": {
           "description": "Boolean indicator of success",
