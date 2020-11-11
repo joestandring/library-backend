@@ -27,6 +27,10 @@
           "description": "The title of the book",
           "type": "string"
         },
+        "summary": {
+          "description": "A summary of the book",
+          "type": "string"
+        },
         "imgLink": {
           "description": "URI of an image representing the book",
           "type": "string",
@@ -106,6 +110,10 @@
         },
         "title": {
           "description": "The title of the book",
+          "type": "string"
+        },
+        "summary": {
+          "description": "A summary of the book",
           "type": "string"
         },
         "imgLink": {

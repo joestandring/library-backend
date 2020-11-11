@@ -12,7 +12,7 @@
 const Router = require('koa-router');
 // bodyParser is used to extract the body of a HTTP request
 const bodyParser = require('koa-bodyparser');
-const model = require('../models/users.js');
+const model = require('../models/users');
 // Authenticate routes using auth middleware
 const auth = require('../controllers/auth');
 // Use the role-acl permissions set up in permissions/users.js
@@ -21,7 +21,8 @@ const can = require('../permissions/users');
 const { validateUser } = require('../controllers/validation');
 
 // Use the /users endpoint
-const router = Router({ prefix: '/api/v1/users' });
+const prefix = '/api/v1/users';
+const router = Router({ prefix: prefix });
 
 /**
  * Send request data to model getAll function
@@ -85,6 +86,20 @@ async function create(ctx) {
     ctx.status = 201;
     ctx.body = { ID: id, created: true, link: `${ctx.request.path}/${id}` };
   }
+}
+
+/**
+ * Return user details to client when logging in
+ * @param {object} ctx The Koa request/response context object
+ */
+async function login(ctx) {
+  // Return details needed by the client
+  const {ID, username, email, avatarURL} = ctx.state.user
+  const links = {
+    // Return link to full record in JSON
+    self: `${ctx.protocol}://${ctx.host}${prefix}/${ID}`
+  };
+  ctx.body = {ID, username, email, avatarURL, links};
 }
 
 /**
@@ -159,6 +174,7 @@ router.get('/', auth, getAll);
 router.get('/:id([0-9]{1,})', auth, getByID);
 // 'validateUser' is used to validate body content BEFORE the model function is run
 router.post('/', bodyParser(), validateUser, create);
+router.post('/login', auth, login);
 router.put('/:id([0-9]{1,})', auth, bodyParser(), validateUser, update);
 router.del('/:id([0-9]{1,})', auth, remove);
 
