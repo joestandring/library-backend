@@ -12,7 +12,7 @@
 const Router = require('koa-router');
 // bodyParser is used to extract the body of a HTTP request
 const bodyParser = require('koa-bodyparser');
-const model = require('../models/requests.js');
+const model = require('../models/requests');
 // Used to get book owner's ID
 const booksModel = require('../models/books');
 // Authenticate routes using auth middleware
