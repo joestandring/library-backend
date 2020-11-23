@@ -100,6 +100,7 @@ async function login(ctx) {
     self: `${ctx.protocol}://${ctx.host}${prefix}/${ID}`
   };
   ctx.body = {ID, username, email, avatarURL, links};
+  ctx.status = 200;
 }
 
 /**
