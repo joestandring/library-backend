@@ -22,7 +22,7 @@ const { validateUser } = require('../controllers/validation');
 
 // Use the /users endpoint
 const prefix = '/api/v1/users';
-const router = Router({ prefix: prefix });
+const router = Router({ prefix });
 
 /**
  * Send request data to model getAll function
@@ -79,7 +79,7 @@ async function getByID(ctx) {
  * @param {object} ctx The Koa request/response context object
  */
 async function getByUsername(ctx) {
-  const result = await modesl.getByUsername(ctx.params.username);
+  const result = await model.getByUsername(ctx.params.username);
   if (result.length) {
     // Run permissions check. Only admins and the single user should be authorized
     const data = result[0];
@@ -116,12 +116,24 @@ async function create(ctx) {
  */
 async function login(ctx) {
   // Return details needed by the client
-  const {ID, username, email, avatarURL} = ctx.state.user
+  const {
+    ID,
+    username,
+    email,
+    avatarURL,
+  } = ctx.state.user;
+
   const links = {
     // Return link to full record in JSON
-    self: `${ctx.protocol}://${ctx.host}${prefix}/${ID}`
+    self: `${ctx.protocol}://${ctx.host}${prefix}/${ID}`,
   };
-  ctx.body = {ID, username, email, avatarURL, links};
+  ctx.body = {
+    ID,
+    username,
+    email,
+    avatarURL,
+    links,
+  };
   ctx.status = 200;
 }
 

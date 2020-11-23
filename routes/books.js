@@ -22,7 +22,7 @@ const { validateBook } = require('../controllers/validation');
 
 // Use the /books endpoint
 const prefix = '/api/v1/books';
-const router = Router({ prefix: prefix })
+const router = Router({ prefix });
 
 /**
  * Send request data to model getAll function
@@ -40,11 +40,31 @@ async function getAll(ctx) {
   // If the response is not empty
   if (result.length) {
     ctx.status = 200;
-    ctx.body = result.map(book => {
+    ctx.body = result.map((book) => {
       // Extract desired fields to return
-      const { ID, available, title, summary, imgLink, authorFirst, authorLast, dateAdded, publishYear } = book;
-      return { ID, available, title, summary, imgLink, authorFirst, authorLast, dateAdded, publishYear };
-    })
+      const {
+        ID,
+        available,
+        title,
+        summary,
+        imgLink,
+        authorFirst,
+        authorLast,
+        dateAdded,
+        publishYear,
+      } = book;
+      return {
+        ID,
+        available,
+        title,
+        summary,
+        imgLink,
+        authorFirst,
+        authorLast,
+        dateAdded,
+        publishYear,
+      };
+    });
   }
 }
 
