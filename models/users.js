@@ -56,6 +56,18 @@ exports.getByUsername = async function getByUsername(username) {
 };
 
 /**
+ * Respond with a single user record specified by username using SQL
+ * @param {string} username The username of the user record to retrieve
+ * @returns {object} Results object containing indexable rows
+ */
+exports.getByUsername = async function getByUsername(username) {
+  const query = 'SELECT * FROM users WHERE username = ?;';
+  const values = [username];
+  const data = await db.runQuery(query, values);
+  return data;
+};
+
+/**
  * Creates a user record using SQL with values specified in POST request
  * @param {object} user The JSON request data sent in POST request
  * @returns {object} Results object containing indexable rows
