@@ -52,12 +52,34 @@ async function getAll(ctx) {
 }
 
 /**
- * Send request data to model getAll function
+ * Send request data to model getbyID function
  * @param {object} ctx The Koa request/response context object
  */
 async function getByID(ctx) {
   const result = await model.getByID(ctx.params.id);
   // If the response is not empty
+  if (result.length) {
+    // Run permissions check. Only admins and the single user should be authorized
+    const data = result[0];
+    const permission = can.read(ctx.state.user, data);
+    // Check failed
+    if (!permission.granted) {
+      ctx.status = 403;
+      ctx.body = 'Permission check failed';
+    } else {
+      // Only show values specified in permissions/users.js
+      ctx.body = permission.filter(data);
+      ctx.status = 200;
+    }
+  }
+}
+
+/**
+ * Send request data to model getByUsername function
+ * @param {object} ctx The Koa request/response context object
+ */
+async function getByUsername(ctx) {
+  const result = await modesl.getByUsername(ctx.params.username);
   if (result.length) {
     // Run permissions check. Only admins and the single user should be authorized
     const data = result[0];
@@ -173,6 +195,7 @@ async function remove(ctx) {
 // 'auth' is used to verify user information BEFORE the model function is run
 router.get('/', auth, getAll);
 router.get('/:id([0-9]{1,})', auth, getByID);
+router.get('/:username', auth, getByUsername);
 // 'validateUser' is used to validate body content BEFORE the model function is run
 router.post('/', bodyParser(), validateUser, create);
 router.post('/login', auth, login);
