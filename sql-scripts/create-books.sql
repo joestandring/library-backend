@@ -4,6 +4,7 @@ CREATE TABLE books (
   available TINYINT(1) NOT NULL DEFAULT 1,
   isbn VARCHAR(10) NOT NULL,
   title VARCHAR(32) NOT NULL,
+  summary TEXT NOT NULL,
   imgLink VARCHAR(2048),
   authorFirst VARCHAR(16),
   authorLast VARCHAR(16) NOT NULL,

@@ -21,10 +21,14 @@
         },
         "isbn": {
           "description": "13 digit International Standard Book Number of this edition of the book",
-          "type": "string",
+          "type": "string"
         },
         "title": {
           "description": "The title of the book",
+          "type": "string"
+        },
+        "summary": {
+          "description": "A summary of the book",
           "type": "string"
         },
         "imgLink": {
@@ -106,6 +110,10 @@
         },
         "title": {
           "description": "The title of the book",
+          "type": "string"
+        },
+        "summary": {
+          "description": "A summary of the book",
           "type": "string"
         },
         "imgLink": {

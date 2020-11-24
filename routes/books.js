@@ -12,7 +12,7 @@
 const Router = require('koa-router');
 // bodyParser is used to extract the body of a HTTP request
 const bodyParser = require('koa-bodyparser');
-const model = require('../models/books.js');
+const model = require('../models/books');
 // Authenticate routes using auth middleware
 const auth = require('../controllers/auth');
 // Use the role-acl permissions set up in permissions/users.js
@@ -21,7 +21,8 @@ const can = require('../permissions/books');
 const { validateBook } = require('../controllers/validation');
 
 // Use the /books endpoint
-const router = Router({ prefix: '/api/v1/books' });
+const prefix = '/api/v1/books';
+const router = Router({ prefix });
 
 /**
  * Send request data to model getAll function
@@ -39,7 +40,31 @@ async function getAll(ctx) {
   // If the response is not empty
   if (result.length) {
     ctx.status = 200;
-    ctx.body = result;
+    ctx.body = result.map((book) => {
+      // Extract desired fields to return
+      const {
+        ID,
+        available,
+        title,
+        summary,
+        imgLink,
+        authorFirst,
+        authorLast,
+        dateAdded,
+        publishYear,
+      } = book;
+      return {
+        ID,
+        available,
+        title,
+        summary,
+        imgLink,
+        authorFirst,
+        authorLast,
+        dateAdded,
+        publishYear,
+      };
+    });
   }
 }
 

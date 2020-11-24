@@ -37,6 +37,7 @@ Where ```USERNAME``` is your MySQL username and ```PASSWORD``` is your MySQL pas
 | available   | tinyint(1)    | NO   |     | 1                 |                |
 | isbn        | varchar(10)   | NO   |     | NULL              |                |
 | title       | varchar(32)   | NO   |     | NULL              |                |
+| summary     | text          | YES  |     | NULL              |                |
 | imgLink     | varchar(2048) | YES  |     | NULL              |                |
 | authorFirst | varchar(16)   | YES  |     | NULL              |                |
 | authorLast  | varchar(16)   | YES  |     | NULL              |                |
@@ -116,5 +117,5 @@ Whenever you make any changes to files in this project, you should run the linte
 ```
 $ npm run linter
 ```
-and fix all errors/warnings before commiting.
+and fix all errors/warnings before committing.
 

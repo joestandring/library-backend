@@ -38,7 +38,7 @@ const makeValidator = (schema, resource) => {
     } catch (error) {
       // If the input fails validation
       if (error instanceof ValidationError) {
-        ctx.body = { message: error.stack };
+        ctx.body = error;
         ctx.status = 400;
       } else {
         throw error;

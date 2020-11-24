@@ -8,6 +8,7 @@
 // Create instances of Koa and the router object
 const Koa = require('koa');
 const Router = require('koa-router');
+const cors = require('@koa/cors');
 
 const app = new Koa();
 const router = new Router();
@@ -16,6 +17,9 @@ const router = new Router();
 const books = require('./routes/books.js');
 const users = require('./routes/users.js');
 const requests = require('./routes/requests.js');
+
+// Use CORS to allow API use on other domains
+app.use(cors());
 
 /**
  * Greets the user on GET request
