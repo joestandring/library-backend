@@ -55,6 +55,7 @@ Where ```USERNAME``` is your MySQL username and ```PASSWORD``` is your MySQL pas
 | ID           | int(11)     | NO   | PRI | NULL    | auto_increment |
 | username     | varchar(32) | NO   | UNI | NULL    |                |
 | email        | varchar(64) | NO   | UNI | NULL    |                |
+| avatar       | varchar(64) | YES  |     | NULL    |                |
 | password     | varchar(64) | NO   |     | NULL    |                |
 | passwordSalt | varchar(16) | YES  |     | NULL    |                |
 | firstName    | varchar(32) | YES  |     | NULL    |                |
