@@ -79,6 +79,56 @@ async function getByID(ctx) {
 }
 
 /**
+ * Send request data to model getByUserID function
+ * @param {object} ctx The Koa request/response context object
+ */
+async function getByUserID(ctx) {
+  let result = await model.getByUserID(ctx.params.id);
+  // If the response is not empty
+  if (result.length) {
+    // Permissions check
+    const data = result[0];
+    // booksModel needed to also permit book owner
+    result = await booksModel.getByID(data.bookID);
+    const permission = can.read(ctx.state.user, result[0], data);
+    // Check failed
+    if (!permission.granted) {
+      ctx.status = 401;
+      ctx.body = 'Permission check failed';
+    } else {
+      // Only show values specified in permissions/requests.js
+      ctx.body = permission.filter(data);
+      ctx.status = 200;
+    }
+  }
+}
+
+/**
+ * Send request data to model getByBookID function
+ * @param {object} ctx The Koa request/response context object
+ */
+async function getByBookID(ctx) {
+  let result = await model.getByBookID(ctx.params.id);
+  // If the response is not empty
+  if (result.length) {
+    // Permissions check
+    const data = result[0];
+    // booksModel needed to also permit book owner
+    result = await booksModel.getByID(data.bookID);
+    const permission = can.read(ctx.state.user, result[0], data);
+    // Check failed
+    if (!permission.granted) {
+      ctx.status = 401;
+      ctx.body = 'Permission check failed';
+    } else {
+      // Only show values specified in permissions/requests.js
+      ctx.body = permission.filter(data);
+      ctx.status = 200;
+    }
+  }
+}
+
+/**
  * Send request data to model create function
  * @param {object} ctx The Koa request/response context object
  */
@@ -160,6 +210,8 @@ async function remove(ctx) {
 // 'auth' is used to verify user information BEFORE the model function is run
 router.get('/', auth, getAll);
 router.get('/:id([0-9]{1,})', auth, getByID);
+router.get('/user/:id([0-9]{1,})', auth, getByUserID);
+router.get('/book/:id([0-9]{1,})', auth, getByBookID);
 router.post('/', auth, bodyParser(), validateRequest, create);
 router.put('/:id([0-9]{1,})', auth, bodyParser(), validateRequest, update);
 router.del('/:id([0-9]{1,})', auth, remove);
