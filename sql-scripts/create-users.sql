@@ -3,6 +3,7 @@ CREATE TABLE users (
   role VARCHAR(16) NOT NULL DEFAULT 'user',
   username VARCHAR(32) UNIQUE NOT NULL ,
   email VARCHAR(64) UNIQUE NOT NULL,
+  avatar VARCHAR(64),
   password VARCHAR(64) NOT NULL,
   passwordSalt VARCHAR(16),
   firstName VARCHAR(32) NOT NULL,
