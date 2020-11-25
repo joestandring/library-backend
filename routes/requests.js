@@ -87,19 +87,12 @@ async function getByUserID(ctx) {
   // If the response is not empty
   if (result.length) {
     // Permissions check
-    const data = result[0];
+    const data = result;
     // booksModel needed to also permit book owner
     result = await booksModel.getByID(data.bookID);
-    const permission = can.read(ctx.state.user, result[0], data);
-    // Check failed
-    if (!permission.granted) {
-      ctx.status = 401;
-      ctx.body = 'Permission check failed';
-    } else {
-      // Only show values specified in permissions/requests.js
-      ctx.body = permission.filter(data);
-      ctx.status = 200;
-    }
+    // Only show values specified in permissions/requests.js
+    ctx.body = data;
+    ctx.status = 200;
   }
 }
 
@@ -112,19 +105,11 @@ async function getByBookID(ctx) {
   // If the response is not empty
   if (result.length) {
     // Permissions check
-    const data = result[0];
+    const data = result;
     // booksModel needed to also permit book owner
     result = await booksModel.getByID(data.bookID);
-    const permission = can.read(ctx.state.user, result[0], data);
-    // Check failed
-    if (!permission.granted) {
-      ctx.status = 401;
-      ctx.body = 'Permission check failed';
-    } else {
-      // Only show values specified in permissions/requests.js
-      ctx.body = permission.filter(data);
-      ctx.status = 200;
-    }
+    ctx.body = data;
+    ctx.status = 200;
   }
 }
 
@@ -211,7 +196,7 @@ async function remove(ctx) {
 router.get('/', auth, getAll);
 router.get('/:id([0-9]{1,})', auth, getByID);
 router.get('/user/:id([0-9]{1,})', auth, getByUserID);
-router.get('/book/:id([0-9]{1,})', auth, getByBookID);
+router.get('/:id([0-9]{1,})', auth, getByBookID);
 router.post('/', auth, bodyParser(), validateRequest, create);
 router.put('/:id([0-9]{1,})', auth, bodyParser(), validateRequest, update);
 router.del('/:id([0-9]{1,})', auth, remove);
