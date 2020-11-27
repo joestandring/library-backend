@@ -129,7 +129,6 @@ async function update(ctx) {
       const {
         ID,
         ownerID,
-        available,
         dateAdded,
         ...body
       } = ctx.request.body;
