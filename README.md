@@ -69,14 +69,15 @@ Where ```USERNAME``` is your MySQL username and ```PASSWORD``` is your MySQL pas
 ```
 ### requests
 ```
-+---------+--------------+------+-----+---------+----------------+
-| Field   | Type         | Null | Key | Default | Extra          |
-+---------+--------------+------+-----+---------+----------------+
-| ID      | int(11)      | NO   | PRI | NULL    | auto_increment |
-| bookID  | int(11)      | NO   | MUL | NULL    |                |
-| userID  | int(11)      | NO   | MUL | NULL    |                |
-| message | varchar(256) | YES  |     | NULL    |                |
-+---------+--------------+------+-----+---------+----------------+
++----------+--------------+------+-----+---------+----------------+
+| Field    | Type         | Null | Key | Default | Extra          |
++----------+--------------+------+-----+---------+----------------+
+| ID       | int(11)      | NO   | PRI | NULL    | auto_increment |
+| bookID   | int(11)      | NO   | MUL | NULL    |                |
+| userID   | int(11)      | NO   | MUL | NULL    |                |
+| message  | varchar(256) | YES  |     | NULL    |                |
+| accepted | tinyint(1)   | NO   |     | 0       |                |
++----------+--------------+------+-----+---------+----------------+
 ```
 ### roles
 ```

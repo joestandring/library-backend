@@ -3,6 +3,7 @@ CREATE TABLE requests (
   bookID INT NOT NULL,
   userID INT NOT NULL,
   message TEXT,
+  accepted TINYINT(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (ID),
   FOREIGN KEY (bookID) REFERENCES books (ID),
   FOREIGN KEY (userID) REFERENCES users (ID)
