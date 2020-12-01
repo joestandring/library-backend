@@ -17,10 +17,6 @@ ac.grant('user')
   .on('request', ['*']);
 ac.grant('user')
   .condition({ Fn: 'EQUALS', args: { requester: '$.owner' } })
-  .execute('update')
-  .on('request', ['*']);
-ac.grant('user')
-  .condition({ Fn: 'EQUALS', args: { requester: '$.owner' } })
   .execute('delete')
   .on('request');
 
@@ -30,9 +26,6 @@ ac.grant('admin')
   .on('requests');
 ac.grant('admin')
   .execute('read')
-  .on('request');
-ac.grant('admin')
-  .execute('update')
   .on('request');
 ac.grant('admin')
   .execute('delete')
@@ -48,12 +41,6 @@ exports.readAll = (requester) => ac.can(requester.role)
 exports.read = (requester, bookData, data) => ac.can(requester.role)
   .context({ requester: requester.ID, owner: bookData.ownerID, user: data.userID })
   .execute('read')
-  .sync()
-  .on('request');
-/** Check if the requester's role parameter allows them to perform the action */
-exports.update = (requester, data) => ac.can(requester.role)
-  .context({ requester: requester.ID, owner: data.userID })
-  .execute('update')
   .sync()
   .on('request');
 /** Check if the requester's role parameter allows them to perform the action */

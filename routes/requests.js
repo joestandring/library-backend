@@ -139,26 +139,22 @@ async function update(ctx) {
   if (result.length) {
     // Permissions check
     const data = result[0];
-    const permission = can.update(ctx.state.user, data);
+    // booksModel needed to also permit book owner
+    result = await booksModel.getByID(data.bookID);
     // Check failed
-    if (!permission.granted) {
-      ctx.status = 401;
-      ctx.body = 'Permission check failed';
-    } else {
-      // These fields are not updated by the user
-      const {
-        ID,
-        userID,
-        ...body
-      } = ctx.request.body;
-      // Update allowed fields
-      Object.assign(data, body);
-      result = await model.update(data);
-      // If rows changed
-      if (result.affectedRows) {
-        ctx.status = 201;
-        ctx.body = { ID: id, updated: true, link: ctx.request.path };
-      }
+    // These fields are not updated by the user
+    const {
+      ID,
+      userID,
+      ...body
+    } = ctx.request.body;
+    // Update allowed fields
+    Object.assign(data, body);
+    result = await model.update(data);
+    // If rows changed
+    if (result.affectedRows) {
+      ctx.status = 201;
+      ctx.body = { ID: id, updated: true, link: ctx.request.path };
     }
   }
 }
