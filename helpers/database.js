@@ -31,6 +31,6 @@ exports.runQuery = async function runQuery(query, values) {
      * @param {number|string} code The original error code
      * @param {string} id A UUID for the error instanced
      */
-    throw new Error('Database query error');
+    throw new Error(error);
   }
 };

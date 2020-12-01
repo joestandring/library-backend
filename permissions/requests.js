@@ -14,11 +14,11 @@ ac.grant('user')
   // The user can either be the books owner or the user who made the request
   .condition({ Fn: 'OR', args: [{ Fn: 'EQUALS', args: { requester: '$.owner' } }, { Fn: 'EQUALS', args: { requester: '$.user' } }] })
   .execute('read')
-  .on('request', ['*', '!ID']);
+  .on('request', ['*']);
 ac.grant('user')
   .condition({ Fn: 'EQUALS', args: { requester: '$.owner' } })
   .execute('update')
-  .on('request', ['*', '!ID']);
+  .on('request', ['*']);
 ac.grant('user')
   .condition({ Fn: 'EQUALS', args: { requester: '$.owner' } })
   .execute('delete')
