@@ -6,7 +6,9 @@
   "scripts": {
     "start": "nodemon index.js",
     "linter": "./node_modules/.bin/eslint .",
-    "docs": "./node_modules/jsdoc/jsdoc.js ./README.md -c jsdoc.conf.json && nodemon docs.js"
+    "docs": "./node_modules/jsdoc/jsdoc.js ./README.md -c jsdoc.conf.json && nodemon docs.js",
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "repository": {
     "type": "git",
@@ -37,5 +39,11 @@
     "jsdoc": "^3.6.6",
     "redoc": "^2.0.0-rc.40",
     "supertest": "^6.0.1"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ]
   }
 }
