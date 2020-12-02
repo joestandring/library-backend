@@ -1,5 +1,5 @@
 it('Testing to see if Jest works', () => {
-  expect(1).not.toBe(2)
+  expect(1).not.toBe(2);
 });
 
 test('Jest should use the correct database', () => {
