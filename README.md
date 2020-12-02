@@ -58,8 +58,8 @@ Where ```USERNAME``` is your MySQL username and ```PASSWORD``` is your MySQL pas
 | avatar       | varchar(64) | YES  |     | NULL    |                |
 | password     | varchar(64) | NO   |     | NULL    |                |
 | passwordSalt | varchar(16) | YES  |     | NULL    |                |
-| firstName    | varchar(32) | YES  |     | NULL    |                |
-| lastName     | varchar(32) | YES  |     | NULL    |                |
+| firstName    | varchar(32) | NO   |     | NULL    |                |
+| lastName     | varchar(32) | NO   |     | NULL    |                |
 | address1     | varchar(64) | NO   |     | NULL    |                |
 | address2     | varchar(64) | YES  |     | NULL    |                |
 | address3     | varchar(64) | YES  |     | NULL    |                |
