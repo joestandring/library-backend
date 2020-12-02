@@ -40,7 +40,7 @@ Where ```USERNAME``` is your MySQL username and ```PASSWORD``` is your MySQL pas
 | summary     | text          | YES  |     | NULL              |                |
 | imgLink     | varchar(2048) | YES  |     | NULL              |                |
 | authorFirst | varchar(16)   | YES  |     | NULL              |                |
-| authorLast  | varchar(16)   | YES  |     | NULL              |                |
+| authorLast  | varchar(16)   | NO   |     | NULL              |                |
 | genre       | varchar(16)   | YES  |     | NULL              |                |
 | publisher   | varchar(32)   | YES  |     | NULL              |                |
 | publishYear | int(4)        | YES  |     | NULL              |                |
@@ -112,6 +112,13 @@ To run the database, you can use the ```start``` script to run ```index.js``` wi
 $ npm start
 ```
 You can then access the API at http://localhost:3000/api/v1
+
+# Testing
+The Jest testing framework is used to test API requests. To run tests, run:
+```
+$ npm test
+```
+This will create a test database which is a clone from your production data and run the tests in ```__tests__/requests.js```
 
 # Linting
 Files in this project use the [Airbnb JavaScript Style](https://github.com/airbnb/javascript) to keep code consistent. This is enforced using the ```eslint``` rules in ```.eslint.rc```. 
