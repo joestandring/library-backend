@@ -4,4 +4,4 @@ it('Testing to see if Jest works', () => {
 
 test('Jest should use the correct database', () => {
   expect(process.env.DB_DATABASE).toBe('test');
-})
+});
