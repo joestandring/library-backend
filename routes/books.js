@@ -30,12 +30,24 @@ const router = Router({ prefix });
  */
 async function getAll(ctx) {
   // Set default values, overwritten by values in request
-  const {
+  let {
     page = 1,
-    limit = 100,
+    limit = 3,
+  } = ctx.request.query;
+  const {
     order = 'dateAdded',
     direction = 'asc',
   } = ctx.request.query;
+
+  // Make request params integers
+  page = parseInt(page, 10);
+  limit = parseInt(limit, 10);
+
+  // Validate params
+  page = page < 1 ? 1 : page;
+  limit = limit > 100 ? 100 : limit;
+  limit = limit < 1 ? 10 : limit;
+
   const result = await model.getAll(page, limit, order, direction);
   // If the response is not empty
   if (result.length) {
