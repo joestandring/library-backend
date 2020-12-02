@@ -7,8 +7,12 @@
     "start": "nodemon index.js",
     "linter": "./node_modules/.bin/eslint .",
     "docs": "./node_modules/jsdoc/jsdoc.js ./README.md -c jsdoc.conf.json && nodemon docs.js",
-    "test": "jest",
-    "test:watch": "jest --watch"
+    "test": "jest --testTimeout=10000",
+    "test:watch": "jest --watch",
+    "testDB:drop": "mysql -u root -pcodio -e 'DROP DATABASE test;'",
+    "testDB:create": "mysql -u root -pcodio -e 'CREATE DATABASE test;'",
+    "testDB:migrate": "mysqldump -u root -pcodio books | mysql -u root -pcodio test",
+    "pretest": "npm run testDB:drop && npm run testDB:create && npm run testDB:migrate"
   },
   "repository": {
     "type": "git",
