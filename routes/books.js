@@ -33,6 +33,7 @@ async function getAll(ctx) {
   let {
     page = 1,
     limit = 3,
+    fields = null,
   } = ctx.request.query;
   const {
     order = 'dateAdded',
@@ -51,32 +52,22 @@ async function getAll(ctx) {
   const result = await model.getAll(page, limit, order, direction);
   // If the response is not empty
   if (result.length) {
+    if (fields !== null) {
+      // Contain in array
+      if (!Array.isArray(fields)) {
+        fields = [fields];
+      }
+      // Filter by fields
+      ctx.body = result.map((book) => {
+        const partial = {};
+        for (const field of fields) {
+          partial[field] = book[field];
+        }
+        return partial;
+      });
+    }
     ctx.status = 200;
-    ctx.body = result.map((book) => {
-      // Extract desired fields to return
-      const {
-        ID,
-        available,
-        title,
-        summary,
-        imgLink,
-        authorFirst,
-        authorLast,
-        dateAdded,
-        publishYear,
-      } = book;
-      return {
-        ID,
-        available,
-        title,
-        summary,
-        imgLink,
-        authorFirst,
-        authorLast,
-        dateAdded,
-        publishYear,
-      };
-    });
+    ctx.body = result;
   }
 }
 
