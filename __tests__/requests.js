@@ -358,7 +358,7 @@ describe('Invalid data', () => {
       .put('/api/v1/books/2')
       .auth('notauser', 'secret')
       .send({
-        avatar: 1
+        avatar: 1,
       });
     expect(res.statuscode).not.toEqual(201);
   });
@@ -529,7 +529,7 @@ describe('Invalid data', () => {
 describe('Put valid data at request', () => {
   it('should successfully put at request', async () => {
     await request(app.callback())
-      .put('/api/v1/requests/2')
+      .put('/api/v1/requests/1')
       .auth('admin', 'secret')
       .send({
         message: 'New message',
@@ -541,9 +541,9 @@ describe('Put valid data at request', () => {
 // getAll
 describe('getAll bad auth', () => {
   it('should fail to get all requests', async () => {
-    await request(app.callback())
+    const res = await request(app.callback())
       .get('/api/v1/requests')
-      .auth('notauser', 'secret')
+      .auth('notauser', 'secret');
     expect(res.statuscode).not.toEqual(201);
   });
 });
@@ -570,7 +570,7 @@ describe('Bad ID provided to getByID', () => {
 describe('Successfully getByID', () => {
   it('should successfully get request', async () => {
     await request(app.callback())
-      .get('/api/v1/requests/3')
+      .get('/api/v1/requests/1')
       .auth('admin', 'secret')
       .expect(200);
   });
@@ -589,7 +589,7 @@ describe('Bad ID provided to delete', () => {
 describe('No auth provided to delete', () => {
   it('should fail to delete request', async () => {
     const res = await request(app.callback())
-      .delete('/api/v1/requests/5');
+      .delete('/api/v1/requests/1');
     expect(res.statuscode).not.toEqual(200);
   });
 });
@@ -606,7 +606,7 @@ describe('Incorrect auth provided to delete', () => {
 describe('Correct auth provided to delete', () => {
   it('should successfully delete request', async () => {
     await request(app.callback())
-      .delete('/api/v1/requests/8')
+      .delete('/api/v1/requests/1')
       .auth('admin', 'secret')
       .expect(200);
   });
