@@ -7,8 +7,8 @@
     "start": "nodemon index.js",
     "linter": "./node_modules/.bin/eslint .",
     "docs": "./node_modules/jsdoc/jsdoc.js ./README.md -c jsdoc.conf.json && nodemon docs.js",
-    "test": "jest --testTimeout=10000",
-    "test:watch": "jest --watch",
+    "test": "cross-env DB_DATABASE=test jest --testTimeout=10000",
+    "test:watch": "cross-env DB_DATABASE=test_db jest --watch",
     "testDB:drop": "mysql -u root -pcodio -e 'DROP DATABASE test;'",
     "testDB:create": "mysql -u root -pcodio -e 'CREATE DATABASE test;'",
     "testDB:migrate": "mysqldump -u root -pcodio books | mysql -u root -pcodio test",
@@ -36,6 +36,7 @@
     "role-acl": "^4.5.4"
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "eslint": "^7.14.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
