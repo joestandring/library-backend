@@ -1,7 +1,11 @@
+
+| :exclamation:  This project is a mirror of my work completed as part of my bacherlors degree at Coventry University. It is NOT meant to be used|
+|------------------------------------------------------------------------------------------------------------------------------------------------|
+
 # Book Lending API Backend
 An API backend for a book lending service using Node.js, Koa, and MySQL
 
-This document contains information for installing, setting up, and configuring the backend API. For information regarding requests supported by this API see the online documentation at [INSERT LINK].
+This document contains information for installing, setting up, and configuring the backend API.
 
 # Installing
 - Clone the repository:
